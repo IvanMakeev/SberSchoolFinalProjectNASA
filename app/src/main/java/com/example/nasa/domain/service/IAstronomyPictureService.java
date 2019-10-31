@@ -1,12 +1,12 @@
 package com.example.nasa.domain.service;
 
-import com.example.nasa.data.model.APODJson;
+import com.example.nasa.domain.model.APODEntity;
 
 import io.reactivex.Single;
 
 public interface IAstronomyPictureService {
 
-    public Single<APODJson> getAstronomyPicture(String date);
+    Single<APODEntity> getAstronomyPicture(String date);
 
-    public void insertAstronomyPicture(APODJson apod);
+    void insertAstronomyPicture(APODEntity apod);
 }

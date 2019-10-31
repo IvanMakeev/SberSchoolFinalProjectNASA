@@ -1,6 +1,6 @@
 package com.example.nasa.domain.service;
 
-import com.example.nasa.data.model.APODJson;
+import com.example.nasa.domain.model.APODEntity;
 import com.example.nasa.domain.repository.IAstronomyPictureRepository;
 
 import javax.inject.Inject;
@@ -11,20 +11,23 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AstronomyPictureService implements IAstronomyPictureService {
 
+    //перевести инжект через конструктор
+
+
     @Inject
     @Named(IAstronomyPictureRepository.SERVER)
-    public IAstronomyPictureRepository serverRepository;
+    IAstronomyPictureRepository serverRepository;
 
     @Inject
     @Named(IAstronomyPictureRepository.DB)
-    public IAstronomyPictureRepository dbRepository;
+    IAstronomyPictureRepository dbRepository;
 
     @Inject
-    public AstronomyPictureService() {
+    AstronomyPictureService() {
     }
 
     @Override
-    public Single<APODJson> getAstronomyPicture(String date) {
+    public Single<APODEntity> getAstronomyPicture(String date) {
         return serverRepository.getAstronomyPicture(date)
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess(dbRepository::insertAstronomyPicture)
@@ -34,7 +37,7 @@ public class AstronomyPictureService implements IAstronomyPictureService {
     }
 
     @Override
-    public void insertAstronomyPicture(APODJson apod) {
+    public void insertAstronomyPicture(APODEntity apod) {
         dbRepository.insertAstronomyPicture(apod);
     }
 }

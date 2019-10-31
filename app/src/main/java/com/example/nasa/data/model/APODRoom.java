@@ -1,31 +1,34 @@
 package com.example.nasa.data.model;
 
 import androidx.annotation.NonNull;
-
-import com.google.gson.annotations.SerializedName;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
-public class APODJson {
+@Entity
+public class APODRoom {
 
-    @SerializedName("date")
+    @PrimaryKey
+    @ColumnInfo(name = "date")
     @NonNull
     private String mDate;
 
-    @SerializedName("explanation")
+    @ColumnInfo(name = "explanation")
     @NonNull
     private String mExplanation;
 
-    @SerializedName("title")
+    @ColumnInfo(name = "title")
     @NonNull
     private String mTitle;
 
-    @SerializedName("url")
+    @ColumnInfo(name = "url")
     @NonNull
     private String mUrl;
 
 
-    public APODJson(@NonNull String date, @NonNull String explanation, @NonNull String title, @NonNull String url) {
+    public APODRoom(@NonNull String date, @NonNull String explanation, @NonNull String title, @NonNull String url) {
         mDate = date;
         mExplanation = explanation;
         mTitle = title;

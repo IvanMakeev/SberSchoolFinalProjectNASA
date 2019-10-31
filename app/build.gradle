@@ -37,6 +37,9 @@ dependencies {
     //gson
     implementation 'com.google.code.gson:gson:2.8.6'
 
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     //retrofit
     def retrofit2_version = "2.6.2"
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"

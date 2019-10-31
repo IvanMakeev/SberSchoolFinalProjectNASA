@@ -1,16 +1,15 @@
 package com.example.nasa.domain.repository;
 
-import com.example.nasa.data.model.APODJson;
-import com.example.nasa.domain.model.APOD;
+import com.example.nasa.domain.model.APODEntity;
 
 import io.reactivex.Single;
 
 public interface IAstronomyPictureRepository {
 
-    public static final String SERVER = "server";
-    public static final String DB = "db";
+    String SERVER = "server";
+    String DB = "db";
 
-    public Single<APODJson> getAstronomyPicture(String date);
+    Single<APODEntity> getAstronomyPicture(String date);
 
-    public void insertAstronomyPicture(APODJson apod);
+    void insertAstronomyPicture(APODEntity apod);
 }

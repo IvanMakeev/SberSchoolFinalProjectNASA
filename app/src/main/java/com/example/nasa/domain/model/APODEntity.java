@@ -1,31 +1,22 @@
-package com.example.nasa.data.model;
+package com.example.nasa.domain.model;
+
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
-
 import org.jetbrains.annotations.NotNull;
 
-public class APODJson {
+public class APODEntity {
 
-    @SerializedName("date")
     @NonNull
-    private String mDate;
-
-    @SerializedName("explanation")
+    private final String mDate;
     @NonNull
-    private String mExplanation;
-
-    @SerializedName("title")
+    private final String mExplanation;
     @NonNull
-    private String mTitle;
-
-    @SerializedName("url")
+    private final String mTitle;
     @NonNull
-    private String mUrl;
+    private final String mUrl;
 
-
-    public APODJson(@NonNull String date, @NonNull String explanation, @NonNull String title, @NonNull String url) {
+    public APODEntity(@NotNull String date, @NotNull String explanation, @NotNull String title, @NotNull String url) {
         mDate = date;
         mExplanation = explanation;
         mTitle = title;

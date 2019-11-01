@@ -6,23 +6,16 @@ import com.example.nasa.data.model.APODJson;
 import com.example.nasa.domain.model.APODEntity;
 import com.example.nasa.domain.repository.IAstronomyPictureRepository;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import io.reactivex.Single;
 
 public class AstronomyPictureServerRepository implements IAstronomyPictureRepository {
 
-    @Inject
-    NasaApi mApi;
+    private NasaApi mApi;
+    private IMapper<APODEntity, APODJson> mMapper;
 
-    @Inject
-    @Named(IMapper.JSON)
-    IMapper<APODEntity, APODJson> mMapper;
-
-
-    @Inject
-    AstronomyPictureServerRepository() {
+    public AstronomyPictureServerRepository(NasaApi api, IMapper<APODEntity, APODJson> mapper) {
+        mApi = api;
+        mMapper = mapper;
     }
 
     @Override

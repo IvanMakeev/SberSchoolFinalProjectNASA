@@ -6,22 +6,16 @@ import com.example.nasa.data.model.APODRoom;
 import com.example.nasa.domain.model.APODEntity;
 import com.example.nasa.domain.repository.IAstronomyPictureRepository;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import io.reactivex.Single;
 
 public class AstronomyPictureDBRepository implements IAstronomyPictureRepository {
 
-    @Inject
-    NasaDao mDao;
+    private NasaDao mDao;
+    private IMapper<APODEntity, APODRoom> mMapper;
 
-    @Inject
-    @Named(IMapper.ROOM)
-    IMapper<APODEntity, APODRoom> mMapper;
-
-    @Inject
-    AstronomyPictureDBRepository() {
+    public AstronomyPictureDBRepository(NasaDao dao, IMapper<APODEntity, APODRoom> mapper) {
+        mDao = dao;
+        mMapper = mapper;
     }
 
     @Override

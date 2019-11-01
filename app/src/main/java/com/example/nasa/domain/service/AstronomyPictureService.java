@@ -3,27 +3,18 @@ package com.example.nasa.domain.service;
 import com.example.nasa.domain.model.APODEntity;
 import com.example.nasa.domain.repository.IAstronomyPictureRepository;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class AstronomyPictureService implements IAstronomyPictureService {
 
-    //перевести инжект через конструктор
+    private IAstronomyPictureRepository serverRepository;
+    private IAstronomyPictureRepository dbRepository;
 
-
-    @Inject
-    @Named(IAstronomyPictureRepository.SERVER)
-    IAstronomyPictureRepository serverRepository;
-
-    @Inject
-    @Named(IAstronomyPictureRepository.DB)
-    IAstronomyPictureRepository dbRepository;
-
-    @Inject
-    AstronomyPictureService() {
+    public AstronomyPictureService(IAstronomyPictureRepository serverRepository, IAstronomyPictureRepository dbRepository) {
+        this.serverRepository = serverRepository;
+        this.dbRepository = dbRepository;
     }
 
     @Override

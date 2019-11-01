@@ -15,12 +15,15 @@ public class APODEntity {
     private final String mTitle;
     @NonNull
     private final String mUrl;
+    @NonNull
+    private final String mCopyright;
 
-    public APODEntity(@NotNull String date, @NotNull String explanation, @NotNull String title, @NotNull String url) {
+    public APODEntity(@NotNull String date, @NotNull String explanation, @NotNull String title, @NotNull String url, @NonNull String copyright) {
         mDate = date;
         mExplanation = explanation;
         mTitle = title;
         mUrl = url;
+        mCopyright = copyright;
     }
 
     @NotNull
@@ -41,5 +44,10 @@ public class APODEntity {
     @NotNull
     public String getUrl() {
         return mUrl;
+    }
+
+    @NonNull
+    public String getCopyright() {
+        return mCopyright;
     }
 }

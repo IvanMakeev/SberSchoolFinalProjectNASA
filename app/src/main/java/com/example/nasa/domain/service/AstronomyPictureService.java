@@ -28,11 +28,11 @@ public class AstronomyPictureService implements IAstronomyPictureService {
 
     @Override
     public Single<APODEntity> getAstronomyPicture(String date) {
-        return serverRepository.getAstronomyPicture(date)
+        return dbRepository.getAstronomyPicture(date)
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess(dbRepository::insertAstronomyPicture)
                 .onErrorReturn(
-                        throwable -> dbRepository.getAstronomyPicture(date).blockingGet()
+                        throwable -> serverRepository.getAstronomyPicture(date).blockingGet()
                 );
     }
 

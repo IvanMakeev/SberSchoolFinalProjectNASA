@@ -14,23 +14,23 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
-    private final AppDelegate appDelegate;
+    private final AppDelegate mAppDelegate;
 
     public AppModule(AppDelegate appDelegate) {
-        this.appDelegate = appDelegate;
+        this.mAppDelegate = appDelegate;
     }
 
     @Provides
     @Singleton
     public AppDelegate provideApp() {
-        return appDelegate;
+        return mAppDelegate;
     }
 
     @Provides
     @Singleton
     public NasaDatabase provideDatabase() {
         return Room.databaseBuilder(
-                appDelegate,
+                mAppDelegate,
                 NasaDatabase.class,
                 "nasa_database"
         )

@@ -17,8 +17,8 @@ public class RoomMapper implements IMapper<APODEntity, APODRoom> {
                 type.getDate(),
                 type.getExplanation(),
                 type.getTitle(),
-                type.getUrl()
-        );
+                type.getUrl(),
+                type.getCopyright());
     }
 
     @Override
@@ -27,7 +27,7 @@ public class RoomMapper implements IMapper<APODEntity, APODRoom> {
                 type.getDate(),
                 type.getExplanation(),
                 type.getTitle(),
-                type.getUrl()
-        );
+                type.getUrl(),
+                type.getCopyright());
     }
 }

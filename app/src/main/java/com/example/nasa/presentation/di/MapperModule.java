@@ -19,14 +19,14 @@ class MapperModule {
     @Provides
     @Singleton
     @Named(IMapper.JSON)
-    IMapper<APODEntity, APODJson> provideJsonMApper(JsonMapper mapper) {
+    IMapper<APODEntity, APODJson> provideJsonMapper(JsonMapper mapper) {
         return mapper;
     }
 
     @Provides
     @Singleton
     @Named(IMapper.ROOM)
-    IMapper<APODEntity, APODRoom> provideRoomMApper(RoomMapper mapper) {
+    IMapper<APODEntity, APODRoom> provideRoomMapper(RoomMapper mapper) {
         return mapper;
     }
 }

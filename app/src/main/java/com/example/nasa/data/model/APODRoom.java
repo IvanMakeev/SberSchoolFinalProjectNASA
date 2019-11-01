@@ -1,6 +1,7 @@
 package com.example.nasa.data.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -27,12 +28,17 @@ public class APODRoom {
     @NonNull
     private String mUrl;
 
+    @ColumnInfo(name = "copyright")
+    @NonNull
+    private final String mCopyright;
 
-    public APODRoom(@NonNull String date, @NonNull String explanation, @NonNull String title, @NonNull String url) {
+
+    public APODRoom(@NonNull String date, @NonNull String explanation, @NonNull String title, @NonNull String url, @Nullable String copyright) {
         mDate = date;
         mExplanation = explanation;
         mTitle = title;
         mUrl = url;
+        mCopyright = copyright != null ? copyright : "";
     }
 
     @NotNull
@@ -53,5 +59,10 @@ public class APODRoom {
     @NotNull
     public String getUrl() {
         return mUrl;
+    }
+
+    @NonNull
+    public String getCopyright() {
+        return mCopyright;
     }
 }

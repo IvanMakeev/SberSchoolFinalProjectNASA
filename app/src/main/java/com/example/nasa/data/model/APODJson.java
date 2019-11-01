@@ -1,6 +1,7 @@
 package com.example.nasa.data.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -24,12 +25,17 @@ public class APODJson {
     @NonNull
     private String mUrl;
 
+    @SerializedName("copyright")
+    @NonNull
+    private final String mCopyright;
 
-    public APODJson(@NonNull String date, @NonNull String explanation, @NonNull String title, @NonNull String url) {
+
+    public APODJson(@NonNull String date, @NonNull String explanation, @NonNull String title, @NonNull String url, @Nullable String copyright) {
         mDate = date;
         mExplanation = explanation;
         mTitle = title;
         mUrl = url;
+        mCopyright = copyright != null ? copyright : "";
     }
 
     @NotNull
@@ -50,5 +56,10 @@ public class APODJson {
     @NotNull
     public String getUrl() {
         return mUrl;
+    }
+
+    @NonNull
+    public String getCopyright() {
+        return mCopyright;
     }
 }

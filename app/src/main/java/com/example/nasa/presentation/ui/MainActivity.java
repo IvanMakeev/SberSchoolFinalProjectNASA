@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                return YearMonth.now().lengthOfMonth();
+                return YearMonth.now().lengthOfYear();
             }
             return 0;
         }

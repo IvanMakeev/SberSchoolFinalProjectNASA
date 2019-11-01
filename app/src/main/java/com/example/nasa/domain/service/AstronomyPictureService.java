@@ -30,9 +30,16 @@ public class AstronomyPictureService implements IAstronomyPictureService {
     public Single<APODEntity> getAstronomyPicture(String date) {
         return dbRepository.getAstronomyPicture(date)
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess(dbRepository::insertAstronomyPicture)
                 .onErrorReturn(
-                        throwable -> serverRepository.getAstronomyPicture(date).blockingGet()
+                        throwable -> {
+                            if (throwable instanceof NullPointerException) {
+                                return serverRepository.getAstronomyPicture(date)
+                                        .doOnSuccess(dbRepository::insertAstronomyPicture)
+                                        .blockingGet();
+                            } else {
+                                return null;
+                            }
+                        }
                 );
     }
 

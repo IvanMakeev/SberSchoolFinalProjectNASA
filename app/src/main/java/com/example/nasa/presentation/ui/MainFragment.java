@@ -84,9 +84,8 @@ public class MainFragment extends Fragment {
     private void getInformation(@NonNull String date) {
         mService.getAstronomyPicture(date)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(apodEntity -> {
-                    fillView(apodEntity);
-                }, throwable -> {
+                .subscribe(apodEntity -> fillView(apodEntity),
+                        throwable -> {
                     throwable.printStackTrace();
                 });
     }

@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         mPager.setAdapter(mPagerAdapter);
     }
 
-    private static class PageAdapter extends FragmentPagerAdapter {
+    private static class PageAdapter extends FragmentStatePagerAdapter {
 
         private Resources mResources;
 

@@ -1,32 +1,22 @@
 package com.example.nasa.presentation.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.nasa.AppDelegate;
-import com.example.nasa.R;
-import com.example.nasa.domain.model.APODEntity;
+import com.example.nasa.databinding.MainBinding;
 import com.example.nasa.domain.service.IAstronomyPictureService;
-import com.squareup.picasso.Picasso;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import com.example.nasa.presentation.ui.viewmodel.MainViewModel;
+import com.example.nasa.presentation.ui.viewmodel.MainViewModelFactory;
 
 import javax.inject.Inject;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class MainFragment extends Fragment {
 
@@ -34,15 +24,9 @@ public class MainFragment extends Fragment {
 
     @Inject
     IAstronomyPictureService mService;
-
-    private TextView mTitle;
-    private TextView mExplanation;
-    private ImageView mAstronomyPicture;
-    private TextView mCopyright;
-
+    private MainViewModel mViewModel;
 
     public static MainFragment newInstance(@NonNull int position) {
-
         Bundle args = new Bundle();
         args.putInt(POSITION, position);
         MainFragment fragment = new MainFragment();
@@ -53,52 +37,20 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
-        mTitle = root.findViewById(R.id.title_text_view);
-        mExplanation = root.findViewById(R.id.explanation_text_view);
-        mAstronomyPicture = root.findViewById(R.id.astronomy_picture);
-        mCopyright = root.findViewById(R.id.copyright_text_view);
+        MainBinding binding = MainBinding.inflate(inflater, container, false);
         AppDelegate.getInjector().getAppComponent().inject(this);
 
-        getInformation(getDateOffset());
-        return root;
+        int currentPositionPageAdapter = getArguments() != null ? getArguments().getInt(POSITION) : 0;
+        MainViewModelFactory factory = new MainViewModelFactory(mService, currentPositionPageAdapter);
+        mViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
+
+        binding.setMainScreen(mViewModel);
+        return binding.getRoot();
     }
 
-    @NonNull
-    private String getDateOffset() {
-        int currentPosition = getArguments() != null ? getArguments().getInt(POSITION) : 0;
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -currentPosition);
-        Date dateWithOffset = calendar.getTime();
-        return formattingDate(dateWithOffset);
+    @Override
+    public void onStart() {
+        super.onStart();
+        mViewModel.showInformation();
     }
-
-    @NonNull
-    private String formattingDate(@NonNull Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        return dateFormat.format(date);
-    }
-
-
-    private void getInformation(@NonNull String date) {
-        mService.getAstronomyPicture(date)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(apodEntity -> fillView(apodEntity),
-                        throwable -> {
-                    throwable.printStackTrace();
-                });
-    }
-
-    private void fillView(@NonNull APODEntity apodEntity) {
-        getActivity().setTitle(apodEntity.getDate());
-        mTitle.setText(apodEntity.getTitle());
-        mExplanation.setText(apodEntity.getExplanation());
-        Picasso.get().load(apodEntity.getUrl()).error(R.drawable.ic_image_black_96dp).into(mAstronomyPicture);
-        mCopyright.setText(
-                String.format(
-                        getString(R.string.copyright),
-                        apodEntity.getCopyright() != null ? apodEntity.getCopyright() : getString(R.string.free_access)));
-    }
-
 }

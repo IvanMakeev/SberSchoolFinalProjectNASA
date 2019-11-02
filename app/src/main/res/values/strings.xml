@@ -3,4 +3,5 @@
     <string name="picture">picture</string>
     <string name="copyright">Copyright: %S</string>
     <string name="free_access">free access</string>
+    <string name="error">Something went wrong. Try again.</string>
 </resources>

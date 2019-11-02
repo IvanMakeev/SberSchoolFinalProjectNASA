@@ -1,47 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data class="MainBinding">
+
+        <import type="android.view.View" />
+
+        <variable
+            name="mainScreen"
+            type="com.example.nasa.presentation.ui.viewmodel.MainViewModel" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/main_screen_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         tools:context=".presentation.ui.MainActivity">
 
-        <ImageView
-            android:id="@+id/astronomy_picture"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/picture"
-            android:paddingStart="@dimen/default_padding"
-            android:paddingLeft="@dimen/default_padding"
-            android:paddingTop="@dimen/default_padding"
-            android:paddingEnd="@dimen/default_padding"
-            android:paddingRight="@dimen/default_padding" />
+        <include
+            android:id="@+id/include_main_screen"
+            layout="@layout/view_main_screen"
+            android:visibility="@{mainScreen.isErrorVisible ? View.GONE : View.VISIBLE}"
+            bind:mainScreen="@{mainScreen}" />
 
-        <TextView
-            android:id="@+id/title_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/default_padding"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        <include
+            android:id="@+id/include_error"
+            layout="@layout/view_error"
+            android:visibility="@{mainScreen.isErrorVisible ? View.VISIBLE : View.GONE}" />
 
-        <TextView
-            android:id="@+id/explanation_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        <TextView
-            android:id="@+id/copyright_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/default_padding"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" />
-    </LinearLayout>
-</ScrollView>
+    </FrameLayout>
+</layout>

@@ -24,6 +24,10 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -33,6 +37,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //data binding
+    annotationProcessor "androidx.databinding:databinding-compiler:$android_plugin_version"
+
+    // ViewModel and LiveData
+    def lifecycle_version = "2.1.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     //gson
     implementation 'com.google.code.gson:gson:2.8.6'

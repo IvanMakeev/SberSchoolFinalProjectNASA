@@ -9,12 +9,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Build;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.example.nasa.R;
-
-import java.time.YearMonth;
+import com.example.nasa.presentation.utils.DateUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,14 +28,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mPager = findViewById(R.id.pager);
-        mPagerAdapter = new PageAdapter(getSupportFragmentManager(),0);
+        mPagerAdapter = new PageAdapter(getSupportFragmentManager(), 0, this);
         mPager.setAdapter(mPagerAdapter);
     }
 
     private static class PageAdapter extends FragmentPagerAdapter {
 
-        public PageAdapter(@NonNull FragmentManager fm, int behavior) {
+        private Resources mResources;
+
+        public PageAdapter(@NonNull FragmentManager fm, int behavior, Context context) {
             super(fm, behavior);
+            mResources = context.getResources();
         }
 
         @NonNull
@@ -46,16 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                return YearMonth.now().lengthOfYear();
-            }
-            return 0;
+            return DateUtils.getLengthOfYear();
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Title " + position;
+            return mResources.getString(R.string.astronomy_picture, DateUtils.getDateOffset(position));
+
         }
     }
 }

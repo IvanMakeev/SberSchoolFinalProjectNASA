@@ -9,19 +9,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.nasa.domain.model.APODEntity;
 import com.example.nasa.domain.service.IAstronomyPictureService;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import com.example.nasa.presentation.utils.DateUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 public class MainViewModel extends ViewModel {
-
 
     private ObservableField<String> mTitle = new ObservableField<>();
     private ObservableField<String> mExplanation = new ObservableField<>();
@@ -29,9 +21,7 @@ public class MainViewModel extends ViewModel {
     private ObservableField<String> mCopyright = new ObservableField<>();
     private ObservableBoolean isErrorVisible = new ObservableBoolean(false);
 
-
     private int mCurrentPosition;
-
     private IAstronomyPictureService mService;
 
     public MainViewModel(IAstronomyPictureService service, int currentPosition) {
@@ -41,7 +31,7 @@ public class MainViewModel extends ViewModel {
 
     @SuppressLint("CheckResult")
     public void showInformation() {
-        mService.getAstronomyPicture(getDateOffset())
+        mService.getAstronomyPicture(DateUtils.getDateOffset(mCurrentPosition))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> isErrorVisible.set(false))
                 .subscribe(this::bindView,
@@ -51,22 +41,6 @@ public class MainViewModel extends ViewModel {
                         });
     }
 
-
-    @NonNull
-    private String getDateOffset() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -mCurrentPosition);
-        Date dateWithOffset = calendar.getTime();
-        return formattingDate(dateWithOffset);
-    }
-
-    @NonNull
-    private String formattingDate(@NonNull Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        return dateFormat.format(date);
-    }
-
-
     private void bindView(@NonNull APODEntity apodEntity) {
         mTitle.set(apodEntity.getTitle());
         mExplanation.set(apodEntity.getExplanation());
@@ -74,22 +48,27 @@ public class MainViewModel extends ViewModel {
         mCopyright.set(apodEntity.getCopyright());
     }
 
+    @NonNull
     public ObservableField<String> getTitle() {
         return mTitle;
     }
 
+    @NonNull
     public ObservableField<String> getExplanation() {
         return mExplanation;
     }
 
+    @NonNull
     public ObservableField<String> getUrlPicture() {
         return mUrlPicture;
     }
 
+    @NonNull
     public ObservableField<String> getCopyright() {
         return mCopyright;
     }
 
+    @NonNull
     public ObservableBoolean getIsErrorVisible() {
         return isErrorVisible;
     }

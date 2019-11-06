@@ -6,7 +6,7 @@ import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface NasaApi {
+public interface INasaApi {
 
     @GET("planetary/apod")
     Single<APODJson> getAstronomyPicture(@Query("date") String date);

@@ -1,6 +1,6 @@
 package com.example.nasa.data.repository;
 
-import com.example.nasa.data.api.NasaApi;
+import com.example.nasa.data.api.INasaApi;
 import com.example.nasa.data.mapper.IMapper;
 import com.example.nasa.data.model.APODJson;
 import com.example.nasa.domain.model.APODEntity;
@@ -10,10 +10,10 @@ import io.reactivex.Single;
 
 public class AstronomyPictureServerRepository implements IAstronomyPictureRepository {
 
-    private NasaApi mApi;
+    private INasaApi mApi;
     private IMapper<APODEntity, APODJson> mMapper;
 
-    public AstronomyPictureServerRepository(NasaApi api, IMapper<APODEntity, APODJson> mapper) {
+    public AstronomyPictureServerRepository(INasaApi api, IMapper<APODEntity, APODJson> mapper) {
         mApi = api;
         mMapper = mapper;
     }

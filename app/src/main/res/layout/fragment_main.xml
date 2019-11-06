@@ -10,6 +10,7 @@
         <variable
             name="mainScreen"
             type="com.example.nasa.presentation.ui.viewmodel.MainViewModel" />
+
     </data>
 
     <FrameLayout
@@ -27,7 +28,8 @@
         <include
             android:id="@+id/include_error"
             layout="@layout/view_error"
-            android:visibility="@{mainScreen.isErrorVisible ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{mainScreen.isErrorVisible ? View.VISIBLE : View.GONE}"
+            bind:mainScreen="@{mainScreen}" />
 
     </FrameLayout>
 </layout>

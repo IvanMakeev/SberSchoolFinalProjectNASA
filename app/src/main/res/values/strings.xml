@@ -4,5 +4,6 @@
     <string name="copyright">Copyright: %S</string>
     <string name="free_access">free access</string>
     <string name="error">Something went wrong. Try again.</string>
+    <string name="network_error">Network error. Check your internet connection.</string>
     <string name="astronomy_picture">Astronomy picture for %s</string>
 </resources>

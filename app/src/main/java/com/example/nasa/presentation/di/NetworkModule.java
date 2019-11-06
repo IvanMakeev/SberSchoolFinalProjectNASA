@@ -2,7 +2,7 @@ package com.example.nasa.presentation.di;
 
 import com.example.nasa.BuildConfig;
 import com.example.nasa.data.api.ApiKeyInterceptor;
-import com.example.nasa.data.api.NasaApi;
+import com.example.nasa.data.api.INasaApi;
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;
@@ -16,17 +16,17 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class NetworkModule {
+class NetworkModule {
 
     @Provides
     @Singleton
-    public Gson provideGson() {
+    Gson provideGson() {
         return new Gson();
     }
 
     @Provides
     @Singleton
-    public OkHttpClient provideClient() {
+    OkHttpClient provideClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.addInterceptor(new ApiKeyInterceptor());
         if (!BuildConfig.BUILD_TYPE.contains("release")) {
@@ -39,7 +39,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
                 .client(okHttpClient)
@@ -50,7 +50,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public NasaApi provideApiService(Retrofit retrofit) {
-        return retrofit.create(NasaApi.class);
+    INasaApi provideApiService(Retrofit retrofit) {
+        return retrofit.create(INasaApi.class);
     }
 }

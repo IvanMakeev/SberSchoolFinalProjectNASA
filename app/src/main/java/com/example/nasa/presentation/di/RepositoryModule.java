@@ -1,6 +1,6 @@
 package com.example.nasa.presentation.di;
 
-import com.example.nasa.data.api.NasaApi;
+import com.example.nasa.data.api.INasaApi;
 import com.example.nasa.data.database.NasaDao;
 import com.example.nasa.data.mapper.IMapper;
 import com.example.nasa.data.model.APODJson;
@@ -17,13 +17,13 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class RepositoryModule {
+class RepositoryModule {
 
     @Provides
     @Singleton
     @Named(IAstronomyPictureRepository.SERVER)
-    public IAstronomyPictureRepository provideAstronomyPictureServerRepository
-            (NasaApi mApi,
+    IAstronomyPictureRepository provideAstronomyPictureServerRepository
+            (INasaApi mApi,
              @Named(IMapper.JSON)
                      IMapper<APODEntity, APODJson> mJsonMapper) {
         return new AstronomyPictureServerRepository(mApi, mJsonMapper);
@@ -32,7 +32,7 @@ public class RepositoryModule {
     @Provides
     @Singleton
     @Named(IAstronomyPictureRepository.DB)
-    public IAstronomyPictureRepository provideAstronomyPictureDBRepository
+    IAstronomyPictureRepository provideAstronomyPictureDBRepository
             (NasaDao mDao,
              @Named(IMapper.ROOM)
                      IMapper<APODEntity, APODRoom> mRoomMapper) {

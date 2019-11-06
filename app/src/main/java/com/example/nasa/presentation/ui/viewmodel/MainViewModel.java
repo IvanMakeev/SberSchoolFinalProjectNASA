@@ -5,11 +5,14 @@ import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.nasa.domain.model.APODEntity;
 import com.example.nasa.domain.service.IAstronomyPictureService;
 import com.example.nasa.presentation.utils.DateUtils;
+import com.example.nasa.presentation.utils.ErrorUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -20,6 +23,9 @@ public class MainViewModel extends ViewModel {
     private ObservableField<String> mUrlPicture = new ObservableField<>();
     private ObservableField<String> mCopyright = new ObservableField<>();
     private ObservableBoolean isErrorVisible = new ObservableBoolean(false);
+    private MutableLiveData<Boolean> isNetworkError = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
+
 
     private int mCurrentPosition;
     private IAstronomyPictureService mService;
@@ -33,11 +39,18 @@ public class MainViewModel extends ViewModel {
     public void showInformation() {
         mService.getAstronomyPicture(DateUtils.getDateOffset(mCurrentPosition))
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> isErrorVisible.set(false))
+                .doOnSubscribe(disposable -> {
+                    isLoading.setValue(true);
+                    isErrorVisible.set(false);
+                })
                 .subscribe(this::bindView,
                         throwable -> {
+                            if (ErrorUtils.checkNetworkError(throwable)) {
+                                isNetworkError.setValue(true);
+                            } else {
+                                isNetworkError.setValue(false);
+                            }
                             isErrorVisible.set(true);
-                            throwable.printStackTrace();
                         });
     }
 
@@ -71,5 +84,13 @@ public class MainViewModel extends ViewModel {
     @NonNull
     public ObservableBoolean getIsErrorVisible() {
         return isErrorVisible;
+    }
+
+    public LiveData<Boolean> getIsNetworkError() {
+        return isNetworkError;
+    }
+
+    public LiveData<Boolean> getIsLoading() {
+        return isLoading;
     }
 }

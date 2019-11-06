@@ -1,24 +1,22 @@
 package com.example.nasa.domain.model;
 
 
-import androidx.annotation.NonNull;
-
 import org.jetbrains.annotations.NotNull;
 
 public class APODEntity {
 
-    @NonNull
+    @NotNull
     private final String mDate;
-    @NonNull
+    @NotNull
     private final String mExplanation;
-    @NonNull
+    @NotNull
     private final String mTitle;
-    @NonNull
+    @NotNull
     private final String mUrl;
-    @NonNull
+    @NotNull
     private final String mCopyright;
 
-    public APODEntity(@NotNull String date, @NotNull String explanation, @NotNull String title, @NotNull String url, @NonNull String copyright) {
+    public APODEntity(@NotNull String date, @NotNull String explanation, @NotNull String title, @NotNull String url, @NotNull String copyright) {
         mDate = date;
         mExplanation = explanation;
         mTitle = title;
@@ -46,7 +44,7 @@ public class APODEntity {
         return mUrl;
     }
 
-    @NonNull
+    @NotNull
     public String getCopyright() {
         return mCopyright;
     }

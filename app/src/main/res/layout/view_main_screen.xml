@@ -9,12 +9,13 @@
         <variable
             name="mainScreen"
             type="com.example.nasa.presentation.ui.viewmodel.MainViewModel" />
+
     </data>
 
     <ScrollView
+        android:id="@+id/main_screen_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_screen_view">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +34,14 @@
                 android:paddingEnd="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 bind:loadImage="@{mainScreen.urlPicture}"
-                bind:placeholder="@{@drawable/ic_image_black_96dp}" />
+                bind:errorPlaceholder="@{@drawable/ic_image_black_96dp}"
+                bind:progress="@{mainScreen.getIsLoading()}" />
+
+            <ProgressBar
+                android:id="@+id/load_progress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/title_text_view"

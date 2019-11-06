@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-public class DateUtils {
+public final class DateUtils {
 
     @NonNull
     public static String getDateOffset(int currentPosition) {

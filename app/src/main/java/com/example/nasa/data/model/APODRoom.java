@@ -9,24 +9,24 @@ import androidx.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
 
 @Entity
-public class APODRoom {
+public final class APODRoom {
 
     @PrimaryKey
     @ColumnInfo(name = "date")
     @NonNull
-    private String mDate;
+    private final String mDate;
 
     @ColumnInfo(name = "explanation")
     @NonNull
-    private String mExplanation;
+    private final String mExplanation;
 
     @ColumnInfo(name = "title")
     @NonNull
-    private String mTitle;
+    private final String mTitle;
 
     @ColumnInfo(name = "url")
     @NonNull
-    private String mUrl;
+    private final String mUrl;
 
     @ColumnInfo(name = "copyright")
     @NonNull

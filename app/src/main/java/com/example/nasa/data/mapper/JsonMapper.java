@@ -5,7 +5,7 @@ import com.example.nasa.domain.model.APODEntity;
 
 import javax.inject.Inject;
 
-public class JsonMapper implements IMapper<APODEntity, APODJson> {
+public final class JsonMapper implements IMapper<APODEntity, APODJson> {
 
     @Inject
     JsonMapper() {

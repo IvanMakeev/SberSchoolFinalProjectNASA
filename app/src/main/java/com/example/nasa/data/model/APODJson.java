@@ -7,23 +7,23 @@ import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.NotNull;
 
-public class APODJson {
+public final class APODJson {
 
     @SerializedName("date")
     @NonNull
-    private String mDate;
+    private final String mDate;
 
     @SerializedName("explanation")
     @NonNull
-    private String mExplanation;
+    private final String mExplanation;
 
     @SerializedName("title")
     @NonNull
-    private String mTitle;
+    private final String mTitle;
 
     @SerializedName("url")
     @NonNull
-    private String mUrl;
+    private final String mUrl;
 
     @SerializedName("copyright")
     @NonNull

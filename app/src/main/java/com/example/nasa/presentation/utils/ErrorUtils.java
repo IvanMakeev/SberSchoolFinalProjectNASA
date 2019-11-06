@@ -9,7 +9,7 @@ import java.util.List;
 
 import io.reactivex.exceptions.CompositeException;
 
-public class ErrorUtils {
+public final class ErrorUtils {
 
     private static List<Class<? extends IOException>> networkErrorList = Arrays.asList(
             UnknownHostException.class,

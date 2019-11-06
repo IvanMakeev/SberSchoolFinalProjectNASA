@@ -11,11 +11,11 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ServiceModule {
+class ServiceModule {
 
     @Provides
     @Singleton
-    public IAstronomyPictureService provideAstronomyPictureService(
+    IAstronomyPictureService provideAstronomyPictureService(
             @Named(IAstronomyPictureRepository.DB)
                     IAstronomyPictureRepository dbRepository,
             @Named(IAstronomyPictureRepository.SERVER)

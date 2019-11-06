@@ -8,10 +8,10 @@ import com.example.nasa.domain.repository.IAstronomyPictureRepository;
 
 import io.reactivex.Single;
 
-public class AstronomyPictureServerRepository implements IAstronomyPictureRepository {
+public final class AstronomyPictureServerRepository implements IAstronomyPictureRepository {
 
-    private INasaApi mApi;
-    private IMapper<APODEntity, APODJson> mMapper;
+    private final INasaApi mApi;
+    private final IMapper<APODEntity, APODJson> mMapper;
 
     public AstronomyPictureServerRepository(INasaApi api, IMapper<APODEntity, APODJson> mapper) {
         mApi = api;
@@ -21,7 +21,7 @@ public class AstronomyPictureServerRepository implements IAstronomyPictureReposi
     @Override
     public Single<APODEntity> getAstronomyPicture(String date) {
         return mApi.getAstronomyPicture(date)
-                .map(apodJson -> mMapper.mapToEntity(apodJson));
+                .map(mMapper::mapToEntity);
     }
 
     @Override

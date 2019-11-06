@@ -5,7 +5,7 @@ import com.example.nasa.domain.model.APODEntity;
 
 import javax.inject.Inject;
 
-public class RoomMapper implements IMapper<APODEntity, APODRoom> {
+public final class RoomMapper implements IMapper<APODEntity, APODRoom> {
 
     @Inject
     RoomMapper() {

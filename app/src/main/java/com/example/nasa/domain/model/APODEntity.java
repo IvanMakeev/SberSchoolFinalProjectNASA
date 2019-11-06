@@ -3,7 +3,7 @@ package com.example.nasa.domain.model;
 
 import org.jetbrains.annotations.NotNull;
 
-public class APODEntity {
+public final class APODEntity {
 
     @NotNull
     private final String mDate;

@@ -22,13 +22,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public AppDelegate provideApp() {
+    AppDelegate provideApp() {
         return mAppDelegate;
     }
 
     @Provides
     @Singleton
-    public NasaDatabase provideDatabase() {
+    NasaDatabase provideDatabase() {
         return Room.databaseBuilder(
                 mAppDelegate,
                 NasaDatabase.class,
@@ -40,7 +40,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public NasaDao ProvideNasaDao(NasaDatabase database) {
+    NasaDao ProvideNasaDao(NasaDatabase database) {
         return database.getNasaDao();
     }
 }

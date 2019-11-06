@@ -8,10 +8,10 @@ import com.example.nasa.domain.repository.IAstronomyPictureRepository;
 
 import io.reactivex.Single;
 
-public class AstronomyPictureDBRepository implements IAstronomyPictureRepository {
+public final class AstronomyPictureDBRepository implements IAstronomyPictureRepository {
 
-    private NasaDao mDao;
-    private IMapper<APODEntity, APODRoom> mMapper;
+    private final NasaDao mDao;
+    private final IMapper<APODEntity, APODRoom> mMapper;
 
     public AstronomyPictureDBRepository(NasaDao dao, IMapper<APODEntity, APODRoom> mapper) {
         mDao = dao;

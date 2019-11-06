@@ -8,8 +8,8 @@ import com.example.nasa.domain.service.IAstronomyPictureService;
 
 public class MainViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
-    private IAstronomyPictureService mService;
-    private int mCurrentPosition;
+    private final IAstronomyPictureService mService;
+    private final int mCurrentPosition;
 
 
     public MainViewModelFactory(IAstronomyPictureService service, int currentPosition) {

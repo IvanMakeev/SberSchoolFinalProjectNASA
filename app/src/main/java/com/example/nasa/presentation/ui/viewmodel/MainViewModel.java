@@ -18,17 +18,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class MainViewModel extends ViewModel {
 
-    private ObservableField<String> mTitle = new ObservableField<>();
-    private ObservableField<String> mExplanation = new ObservableField<>();
-    private ObservableField<String> mUrlPicture = new ObservableField<>();
-    private ObservableField<String> mCopyright = new ObservableField<>();
-    private ObservableBoolean isErrorVisible = new ObservableBoolean(false);
-    private MutableLiveData<Boolean> isNetworkError = new MutableLiveData<>(false);
-    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
+    private final ObservableField<String> mTitle = new ObservableField<>();
+    private final ObservableField<String> mExplanation = new ObservableField<>();
+    private final ObservableField<String> mUrlPicture = new ObservableField<>();
+    private final ObservableField<String> mCopyright = new ObservableField<>();
+    private final ObservableBoolean isErrorVisible = new ObservableBoolean(false);
+    private final MutableLiveData<Boolean> isNetworkError = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
-
-    private int mCurrentPosition;
-    private IAstronomyPictureService mService;
+    private final int mCurrentPosition;
+    private final IAstronomyPictureService mService;
 
     public MainViewModel(IAstronomyPictureService service, int currentPosition) {
         mService = service;

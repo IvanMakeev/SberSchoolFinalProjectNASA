@@ -7,10 +7,10 @@ import com.example.nasa.domain.repository.IAstronomyPictureRepository;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-public class AstronomyPictureService implements IAstronomyPictureService {
+public final class AstronomyPictureService implements IAstronomyPictureService {
 
-    private IAstronomyPictureRepository serverRepository;
-    private IAstronomyPictureRepository dbRepository;
+    private final IAstronomyPictureRepository serverRepository;
+    private final IAstronomyPictureRepository dbRepository;
 
     public AstronomyPictureService(IAstronomyPictureRepository serverRepository, IAstronomyPictureRepository dbRepository) {
         this.serverRepository = serverRepository;

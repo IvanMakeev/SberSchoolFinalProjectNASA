@@ -6,7 +6,7 @@ import com.example.nasa.presentation.di.AppComponent;
 import com.example.nasa.presentation.di.AppModule;
 import com.example.nasa.presentation.di.DaggerAppComponent;
 
-public class AppDelegate extends Application {
+public final class AppDelegate extends Application {
 
     private static AppDelegate INSTANCE;
     private AppComponent appComponent;
@@ -20,7 +20,7 @@ public class AppDelegate extends Application {
                 .build();
     }
 
-    public static AppDelegate getInjector(){
+    public static AppDelegate getInjector() {
         return INSTANCE;
     }
 

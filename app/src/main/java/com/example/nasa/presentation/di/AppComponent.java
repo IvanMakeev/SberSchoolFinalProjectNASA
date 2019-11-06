@@ -1,6 +1,5 @@
 package com.example.nasa.presentation.di;
 
-import com.example.nasa.presentation.ui.MainActivity;
 import com.example.nasa.presentation.ui.MainFragment;
 
 import javax.inject.Singleton;

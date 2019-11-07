@@ -1,0 +1,79 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.example.nasa"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation project(":domain")
+    implementation project(":data")
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //data binding
+    annotationProcessor "androidx.databinding:databinding-compiler:$android_plugin_version"
+
+    // ViewModel and LiveData
+    def lifecycle_version = "2.1.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //rx
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.13'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    //room
+    def room_version = "1.1.1"
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    //retrofit
+    def retrofit2_version = "2.6.2"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2_version"
+
+    //okhttp3
+    def okhttp3_version = "4.2.1"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
+
+    // dagger 2
+    def dagger2_version = "2.15"
+    implementation "com.google.dagger:dagger:$dagger2_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger2_version"
+}

@@ -1,0 +1,27 @@
+package com.example.presentation.ui.viewmodel;
+
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.domain.service.IAstronomyPictureService;
+
+import org.jetbrains.annotations.NotNull;
+
+
+public class MainViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+
+    private final IAstronomyPictureService mService;
+    private final int mCurrentPosition;
+
+
+    public MainViewModelFactory(IAstronomyPictureService service, int currentPosition) {
+        mService = service;
+        mCurrentPosition = currentPosition;
+    }
+
+    @NotNull
+    @Override
+    public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
+        return (T) new MainViewModel(mService, mCurrentPosition);
+    }
+}

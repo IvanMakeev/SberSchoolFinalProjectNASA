@@ -13,6 +13,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class ApiKeyInterceptor implements Interceptor {
+
+    private static final String PROPERTY_API_KEY = "api_key";
+
     @Override
     public @NotNull
     Response intercept(@NotNull Chain chain) throws IOException {
@@ -20,7 +23,7 @@ public class ApiKeyInterceptor implements Interceptor {
         HttpUrl httpUrl = request
                 .url()
                 .newBuilder()
-                .addQueryParameter("api_key", BuildConfig.API_KEY)
+                .addQueryParameter(PROPERTY_API_KEY, BuildConfig.API_KEY)
                 .build();
         return chain.proceed(request
                 .newBuilder()

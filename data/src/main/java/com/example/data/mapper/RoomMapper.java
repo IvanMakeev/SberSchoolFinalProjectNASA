@@ -23,11 +23,22 @@ public final class RoomMapper implements IMapper<APODEntity, APODRoom> {
 
     @Override
     public APODEntity mapToEntity(APODRoom type) {
-        return new APODEntity(
-                type.getDate(),
-                type.getExplanation(),
-                type.getTitle(),
-                type.getUrl(),
-                type.getCopyright());
+        APODEntity apodEntity;
+        if (type != null) {
+            apodEntity = new APODEntity(
+                    type.getDate(),
+                    type.getExplanation(),
+                    type.getTitle(),
+                    type.getUrl(),
+                    type.getCopyright());
+        } else {
+            apodEntity = new APODEntity(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "");
+        }
+        return apodEntity;
     }
 }

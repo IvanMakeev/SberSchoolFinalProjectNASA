@@ -4,8 +4,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'org.jetbrains:annotations:16.0.1'
 
+    //test
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+
     //rx
     implementation 'io.reactivex.rxjava2:rxjava:2.2.13'
+
 }
 
 sourceCompatibility = "8"

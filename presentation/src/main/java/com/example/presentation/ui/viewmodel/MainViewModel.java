@@ -16,6 +16,7 @@ import com.example.presentation.utils.ErrorUtils;
 import org.jetbrains.annotations.NotNull;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class MainViewModel extends ViewModel {
 
@@ -27,17 +28,17 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isNetworkError = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
-    private final int mCurrentPosition;
     private final IAstronomyPictureService mService;
+    private final CompositeDisposable mCompositeDisposable;
 
-    public MainViewModel(IAstronomyPictureService service, int currentPosition) {
+    public MainViewModel(IAstronomyPictureService service) {
         mService = service;
-        mCurrentPosition = currentPosition;
+        mCompositeDisposable = new CompositeDisposable();
     }
 
     @SuppressLint("CheckResult")
-    public void showInformation() {
-        mService.getAstronomyPicture(DateUtils.getDateOffset(mCurrentPosition))
+    public void showInformation(int currentPositionVIewPage) {
+        mCompositeDisposable.add(mService.getAstronomyPicture(DateUtils.getDateOffset(currentPositionVIewPage))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
                     isLoading.setValue(true);
@@ -51,7 +52,8 @@ public class MainViewModel extends ViewModel {
                                 isNetworkError.setValue(false);
                             }
                             isErrorVisible.set(true);
-                        });
+                        })
+        );
     }
 
     private void bindView(@NotNull APODEntity apodEntity) {
@@ -59,6 +61,11 @@ public class MainViewModel extends ViewModel {
         mExplanation.set(apodEntity.getExplanation());
         mUrlPicture.set(apodEntity.getUrl());
         mCopyright.set(apodEntity.getCopyright());
+    }
+
+    @Override
+    protected void onCleared() {
+        mCompositeDisposable.dispose();
     }
 
     @NotNull
@@ -86,10 +93,12 @@ public class MainViewModel extends ViewModel {
         return isErrorVisible;
     }
 
+    @NotNull
     public LiveData<Boolean> getIsNetworkError() {
         return isNetworkError;
     }
 
+    @NotNull
     public LiveData<Boolean> getIsLoading() {
         return isLoading;
     }

@@ -6,25 +6,28 @@ import com.example.data.database.NasaDao;
 import com.example.domain.model.APODEntity;
 import com.example.domain.repository.IAstronomyPictureRepository;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.reactivex.Single;
 
-public final class AstronomyPictureDBRepository implements IAstronomyPictureRepository {
+public class AstronomyPictureDBRepository implements IAstronomyPictureRepository {
 
     private final NasaDao mDao;
     private final IMapper<APODEntity, APODRoom> mMapper;
 
-    public AstronomyPictureDBRepository(NasaDao dao, IMapper<APODEntity, APODRoom> mapper) {
+    public AstronomyPictureDBRepository(@NotNull NasaDao dao, @NotNull IMapper<APODEntity, APODRoom> mapper) {
         mDao = dao;
         mMapper = mapper;
     }
 
+    @NotNull
     @Override
-    public Single<APODEntity> getAstronomyPicture(final String date) {
+    public Single<APODEntity> getAstronomyPicture(@NotNull final String date) {
         return Single.fromCallable(() -> mMapper.mapToEntity(mDao.getAstronomyPicture(date)));
     }
 
     @Override
-    public void insertAstronomyPicture(APODEntity apod) {
+    public void insertAstronomyPicture(@NotNull APODEntity apod) {
         mDao.insertAstronomyPicture(mMapper.mapFromEntity(apod));
     }
 }

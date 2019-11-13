@@ -5,10 +5,10 @@ import com.example.domain.model.APODEntity;
 
 import javax.inject.Inject;
 
-public final class RoomMapper implements IMapper<APODEntity, APODRoom> {
+public class RoomMapper implements IMapper<APODEntity, APODRoom> {
 
     @Inject
-    RoomMapper() {
+    public RoomMapper() {
     }
 
     @Override

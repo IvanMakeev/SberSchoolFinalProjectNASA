@@ -3,6 +3,8 @@ package com.example.domain.model;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public final class APODEntity {
 
     @NotNull
@@ -47,5 +49,22 @@ public final class APODEntity {
     @NotNull
     public String getCopyright() {
         return mCopyright;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        APODEntity that = (APODEntity) o;
+        return mDate.equals(that.mDate) &&
+                mExplanation.equals(that.mExplanation) &&
+                mTitle.equals(that.mTitle) &&
+                mUrl.equals(that.mUrl) &&
+                mCopyright.equals(that.mCopyright);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mDate, mExplanation, mTitle, mUrl, mCopyright);
     }
 }

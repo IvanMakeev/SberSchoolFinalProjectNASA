@@ -6,7 +6,7 @@ import io.reactivex.Single;
 
 public interface IAstronomyPictureRepository {
 
-    String SERVER = "server";
+    String NETWORK = "network";
     String DB = "db";
 
     Single<APODEntity> getAstronomyPicture(String date);

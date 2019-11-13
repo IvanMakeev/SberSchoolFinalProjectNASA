@@ -13,28 +13,29 @@ import io.reactivex.schedulers.Schedulers;
 
 public final class AstronomyPictureService implements IAstronomyPictureService {
 
-    private final IAstronomyPictureRepository serverRepository;
+    private final IAstronomyPictureRepository networkRepository;
     private final IAstronomyPictureRepository dbRepository;
 
-    public AstronomyPictureService(IAstronomyPictureRepository serverRepository, IAstronomyPictureRepository dbRepository) {
-        this.serverRepository = serverRepository;
+    public AstronomyPictureService(IAstronomyPictureRepository networkRepository, IAstronomyPictureRepository dbRepository) {
+        this.networkRepository = networkRepository;
         this.dbRepository = dbRepository;
     }
 
+    @NotNull
     @Override
-    public Single<APODEntity> getAstronomyPicture(String date) {
+    public Single<APODEntity> getAstronomyPicture(@NotNull String date) {
         return dbRepository.getAstronomyPicture(date)
                 .flatMap(getSource(date))
                 .subscribeOn(Schedulers.io());
     }
 
     @Override
-    public void insertAstronomyPicture(APODEntity apod) {
+    public void insertAstronomyPicture(@NotNull APODEntity apod) {
         dbRepository.insertAstronomyPicture(apod);
     }
 
     @NotNull
-    private Function<APODEntity, SingleSource<APODEntity>> getSource(String date) {
+    private Function<APODEntity, SingleSource<APODEntity>> getSource(@NotNull String date) {
         return apodEntity -> {
             if (isDataExist(apodEntity)) {
                 return extractFromDatabase(apodEntity);
@@ -44,18 +45,18 @@ public final class AstronomyPictureService implements IAstronomyPictureService {
         };
     }
 
-    private boolean isDataExist(APODEntity apodEntity) {
+    private boolean isDataExist(@NotNull APODEntity apodEntity) {
         return !apodEntity.getDate().equals("");
     }
 
     @NotNull
-    private SingleSource<APODEntity> extractFromDatabase(APODEntity apodEntity) {
+    private SingleSource<APODEntity> extractFromDatabase(@NotNull APODEntity apodEntity) {
         return Single.fromCallable(() -> apodEntity);
     }
 
     @NotNull
-    private SingleSource<APODEntity> extractFromNetwork(String date) {
-        return serverRepository.getAstronomyPicture(date)
+    private SingleSource<APODEntity> extractFromNetwork(@NotNull String date) {
+        return networkRepository.getAstronomyPicture(date)
                 .doOnSuccess(dbRepository::insertAstronomyPicture);
     }
 }

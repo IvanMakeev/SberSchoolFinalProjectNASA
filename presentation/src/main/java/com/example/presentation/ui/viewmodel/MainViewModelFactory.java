@@ -11,17 +11,15 @@ import org.jetbrains.annotations.NotNull;
 public class MainViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private final IAstronomyPictureService mService;
-    private final int mCurrentPosition;
 
-
-    public MainViewModelFactory(IAstronomyPictureService service, int currentPosition) {
+    public MainViewModelFactory(@NotNull IAstronomyPictureService service) {
         mService = service;
-        mCurrentPosition = currentPosition;
     }
 
+    @SuppressWarnings("unchecked cast")
     @NotNull
     @Override
     public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
-        return (T) new MainViewModel(mService, mCurrentPosition);
+        return (T) new MainViewModel(mService);
     }
 }

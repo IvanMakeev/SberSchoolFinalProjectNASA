@@ -5,10 +5,10 @@ import com.example.domain.model.APODEntity;
 
 import javax.inject.Inject;
 
-public final class JsonMapper implements IMapper<APODEntity, APODJson> {
+public class JsonMapper implements IMapper<APODEntity, APODJson> {
 
     @Inject
-    JsonMapper() {
+    public JsonMapper() {
     }
 
     @Override

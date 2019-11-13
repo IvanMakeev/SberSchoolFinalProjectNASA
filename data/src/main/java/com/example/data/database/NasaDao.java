@@ -7,6 +7,8 @@ import androidx.room.Query;
 
 import com.example.data.model.APODRoom;
 
+import java.util.List;
+
 @Dao
 public interface NasaDao {
 
@@ -15,4 +17,7 @@ public interface NasaDao {
 
     @Query("select * from APODRoom where date = :date")
     APODRoom getAstronomyPicture(String date);
+
+    @Query("select * from APODRoom")
+    List<APODRoom> getAll();
 }

@@ -6,20 +6,23 @@ import com.example.data.model.APODJson;
 import com.example.domain.model.APODEntity;
 import com.example.domain.repository.IAstronomyPictureRepository;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.reactivex.Single;
 
-public final class AstronomyPictureServerRepository implements IAstronomyPictureRepository {
+public class AstronomyPictureNetworkRepository implements IAstronomyPictureRepository {
 
     private final INasaApi mApi;
     private final IMapper<APODEntity, APODJson> mMapper;
 
-    public AstronomyPictureServerRepository(INasaApi api, IMapper<APODEntity, APODJson> mapper) {
+    public AstronomyPictureNetworkRepository(@NotNull INasaApi api, @NotNull IMapper<APODEntity, APODJson> mapper) {
         mApi = api;
         mMapper = mapper;
     }
 
+    @NotNull
     @Override
-    public Single<APODEntity> getAstronomyPicture(String date) {
+    public Single<APODEntity> getAstronomyPicture(@NotNull String date) {
         return mApi.getAstronomyPicture(date)
                 .map(mMapper::mapToEntity);
     }

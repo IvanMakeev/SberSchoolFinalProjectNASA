@@ -1,6 +1,5 @@
-package com.example.presentation.presentation1.utils;
+package com.example.presentation.utils;
 
-import com.example.presentation.utils.DateUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class DateUtilsTest {
     private String mCurrentDate;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
         mCurrentDate = dateFormat.format(calendar.getTime());

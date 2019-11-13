@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public final class APODJson {
 
     @SerializedName("date")
@@ -60,5 +62,22 @@ public final class APODJson {
     @NotNull
     public String getCopyright() {
         return mCopyright;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        APODJson apodJson = (APODJson) o;
+        return mDate.equals(apodJson.mDate) &&
+                mExplanation.equals(apodJson.mExplanation) &&
+                mTitle.equals(apodJson.mTitle) &&
+                mUrl.equals(apodJson.mUrl) &&
+                mCopyright.equals(apodJson.mCopyright);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mDate, mExplanation, mTitle, mUrl, mCopyright);
     }
 }

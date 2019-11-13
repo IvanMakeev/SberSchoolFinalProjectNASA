@@ -1,6 +1,4 @@
-package com.example.presentation.presentation1.utils;
-
-import com.example.presentation.utils.ErrorUtils;
+package com.example.presentation.utils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +19,7 @@ public class ErrorUtilsTest {
     private List<Class<? extends IOException>> mNetworkErrorList;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mNetworkErrorList = Arrays.asList(
                 UnknownHostException.class,
                 SocketTimeoutException.class,
@@ -30,7 +28,7 @@ public class ErrorUtilsTest {
     }
 
     @Test
-    public void checkNetworkError() throws InstantiationException, IllegalAccessException {
+    public void testCheckNetworkError() throws InstantiationException, IllegalAccessException {
         for (Class<? extends IOException> klass : mNetworkErrorList) {
             assertTrue(ErrorUtils.checkNetworkError(klass.newInstance()));
 

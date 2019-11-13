@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 @Entity
 public final class APODRoom {
 
@@ -63,5 +65,22 @@ public final class APODRoom {
     @NotNull
     public String getCopyright() {
         return mCopyright;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        APODRoom apodRoom = (APODRoom) o;
+        return mDate.equals(apodRoom.mDate) &&
+                mExplanation.equals(apodRoom.mExplanation) &&
+                mTitle.equals(apodRoom.mTitle) &&
+                mUrl.equals(apodRoom.mUrl) &&
+                mCopyright.equals(apodRoom.mCopyright);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mDate, mExplanation, mTitle, mUrl, mCopyright);
     }
 }

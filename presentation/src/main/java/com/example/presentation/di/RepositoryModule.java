@@ -6,7 +6,7 @@ import com.example.data.mapper.IMapper;
 import com.example.data.model.APODJson;
 import com.example.data.model.APODRoom;
 import com.example.data.repository.AstronomyPictureDBRepository;
-import com.example.data.repository.AstronomyPictureServerRepository;
+import com.example.data.repository.AstronomyPictureNetworkRepository;
 import com.example.domain.model.APODEntity;
 import com.example.domain.repository.IAstronomyPictureRepository;
 
@@ -21,12 +21,12 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    @Named(IAstronomyPictureRepository.SERVER)
+    @Named(IAstronomyPictureRepository.NETWORK)
     IAstronomyPictureRepository provideAstronomyPictureServerRepository
             (INasaApi mApi,
              @Named(IMapper.JSON)
                      IMapper<APODEntity, APODJson> mJsonMapper) {
-        return new AstronomyPictureServerRepository(mApi, mJsonMapper);
+        return new AstronomyPictureNetworkRepository(mApi, mJsonMapper);
     }
 
     @Provides

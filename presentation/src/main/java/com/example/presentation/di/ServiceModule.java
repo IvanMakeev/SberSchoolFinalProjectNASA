@@ -19,7 +19,7 @@ class ServiceModule {
     IAstronomyPictureService provideAstronomyPictureService(
             @Named(IAstronomyPictureRepository.DB)
                     IAstronomyPictureRepository dbRepository,
-            @Named(IAstronomyPictureRepository.SERVER)
+            @Named(IAstronomyPictureRepository.NETWORK)
                     IAstronomyPictureRepository serverRepository
     ) {
         return new AstronomyPictureService(serverRepository, dbRepository);

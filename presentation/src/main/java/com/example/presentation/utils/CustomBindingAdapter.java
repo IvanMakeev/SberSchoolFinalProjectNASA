@@ -12,6 +12,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class CustomBindingAdapter {
+    @SuppressWarnings("unchecked cast")
     @BindingAdapter({"bind:loadImage", "bind:errorPlaceholder", "bind:progress"})
     public static void loadImage(ImageView imageView, ObservableField<String> urlImage, Drawable error, LiveData<Boolean> progress) {
         Picasso.get()

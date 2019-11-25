@@ -8,8 +8,11 @@ import org.junit.Test;
 
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
+import io.reactivex.plugins.RxJavaPlugins;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class AstronomyPictureServiceTest {
@@ -18,6 +21,7 @@ public class AstronomyPictureServiceTest {
 
     private APODEntity mEnteredEntity;
     private AstronomyPictureService mService;
+    private IAstronomyPictureRepository mDbRepository;
 
     @Before
     public void setUp() {
@@ -33,18 +37,23 @@ public class AstronomyPictureServiceTest {
         when(networkRepository.getAstronomyPicture(TEST_DATE)).thenReturn(Single.fromCallable(() ->
                 mEnteredEntity));
 
-        IAstronomyPictureRepository dbRepository = mock(IAstronomyPictureRepository.class);
-        when(dbRepository.getAstronomyPicture(TEST_DATE)).thenReturn(Single.fromCallable(() ->
+        mDbRepository = mock(IAstronomyPictureRepository.class);
+        when(mDbRepository.getAstronomyPicture(TEST_DATE)).thenReturn(Single.fromCallable(() ->
                 mEnteredEntity));
 
 
-        mService = new AstronomyPictureService(networkRepository, dbRepository);
+        mService = new AstronomyPictureService(networkRepository, mDbRepository);
     }
 
     @Test
     public void testGetAstronomyPicture() {
         TestObserver<APODEntity> observer = mService.getAstronomyPicture(TEST_DATE).test();
-        observer.awaitTerminalEvent();
         observer.assertValue(mEnteredEntity);
     }
+
+    @Test
+    public void testInsertAstronomyPicture() {
+
+    }
+
 }

@@ -25,10 +25,12 @@
             android:id="@+id/error_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@{mainScreen.isNetworkError ? @string/network_error : @string/error}"
             android:textColor="#a40616"
-            android:textSize="16sp"
+            android:textSize="@dimen/error_text_size"
             android:textStyle="bold" />
+
 
     </LinearLayout>
 </layout>

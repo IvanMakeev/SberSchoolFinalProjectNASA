@@ -2,11 +2,14 @@ package com.example.domain.service;
 
 import com.example.domain.model.APODEntity;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.reactivex.Single;
 
 public interface IAstronomyPictureService {
 
-    Single<APODEntity> getAstronomyPicture(String date);
+    @NotNull
+    Single<APODEntity> getAstronomyPicture(@NotNull String date);
 
-    void insertAstronomyPicture(APODEntity apod);
+    void insertAstronomyPicture(@NotNull APODEntity apod);
 }

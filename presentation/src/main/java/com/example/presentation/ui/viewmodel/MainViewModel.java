@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainViewModel extends ViewModel {
 
@@ -39,6 +40,7 @@ public class MainViewModel extends ViewModel {
     @SuppressLint("CheckResult")
     public void showInformation(int currentPositionVIewPage) {
         mCompositeDisposable.add(mService.getAstronomyPicture(DateUtils.getDateOffset(currentPositionVIewPage))
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
                     isLoading.setValue(true);

@@ -15,23 +15,25 @@ public class CustomBindingAdapter {
     @SuppressWarnings("unchecked cast")
     @BindingAdapter({"bind:loadImage", "bind:errorPlaceholder", "bind:progress"})
     public static void loadImage(ImageView imageView, ObservableField<String> urlImage, Drawable error, LiveData<Boolean> progress) {
-        Picasso.get()
-                .load(urlImage.get())
-                .error(error)
-                .into(imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        if (progress instanceof MutableLiveData) {
-                            ((MutableLiveData) progress).setValue(false);
+        if (imageView.getDrawable() == null) {
+            Picasso.get()
+                    .load(urlImage.get())
+                    .error(error)
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            if (progress instanceof MutableLiveData) {
+                                ((MutableLiveData) progress).setValue(false);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(Exception e) {
-                        if (progress instanceof MutableLiveData) {
-                            ((MutableLiveData) progress).setValue(false);
+                        @Override
+                        public void onError(Exception e) {
+                            if (progress instanceof MutableLiveData) {
+                                ((MutableLiveData) progress).setValue(false);
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 }

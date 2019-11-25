@@ -9,9 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
-public final class AstronomyPictureService implements IAstronomyPictureService {
+public class AstronomyPictureService implements IAstronomyPictureService {
 
     private final IAstronomyPictureRepository networkRepository;
     private final IAstronomyPictureRepository dbRepository;
@@ -25,8 +24,7 @@ public final class AstronomyPictureService implements IAstronomyPictureService {
     @Override
     public Single<APODEntity> getAstronomyPicture(@NotNull String date) {
         return dbRepository.getAstronomyPicture(date)
-                .flatMap(getSource(date))
-                .subscribeOn(Schedulers.io());
+                .flatMap(getSource(date));
     }
 
     @Override

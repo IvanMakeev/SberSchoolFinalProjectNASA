@@ -30,7 +30,7 @@ class NetworkModule {
     OkHttpClient provideClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.addInterceptor(new ApiKeyInterceptor());
-        if (!BuildConfig.BUILD_TYPE.contains("release")) {
+        if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.level(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(logging);

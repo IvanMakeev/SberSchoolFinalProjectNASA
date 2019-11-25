@@ -15,6 +15,9 @@ import java.util.Locale;
 
 public final class DateUtils {
 
+
+    private DateUtils() { }
+
     @NotNull
     public static String getDateOffset(int currentPosition) {
         Calendar calendar = Calendar.getInstance();

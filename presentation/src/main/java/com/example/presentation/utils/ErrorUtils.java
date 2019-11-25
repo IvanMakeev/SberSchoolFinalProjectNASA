@@ -11,6 +11,8 @@ import io.reactivex.exceptions.CompositeException;
 
 public final class ErrorUtils {
 
+    private ErrorUtils() {}
+
     private static List<Class<? extends IOException>> networkErrorList = Arrays.asList(
             UnknownHostException.class,
             SocketTimeoutException.class,

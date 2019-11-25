@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.domain.service.IAstronomyPictureService;
 import com.example.presentation.AppDelegate;
-import com.example.presentation.R;
 import com.example.presentation.databinding.MainBinding;
 import com.example.presentation.ui.viewmodel.MainViewModel;
 import com.example.presentation.ui.viewmodel.MainViewModelFactory;
@@ -47,7 +45,7 @@ public class MainFragment extends Fragment {
         MainViewModelFactory factory = new MainViewModelFactory(mService);
         mViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
         binding.setMainScreen(mViewModel);
-        initObservable(binding.getRoot());
+        binding.setLifecycleOwner(this);
         return binding.getRoot();
     }
 
@@ -55,16 +53,5 @@ public class MainFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mViewModel.showInformation(mCurrentPositionPageAdapter);
-    }
-
-    private void initObservable(View view) {
-        mViewModel.getIsLoading().observe(this, isLoading ->
-                view.findViewById(R.id.load_progress)
-                        .setVisibility(isLoading ? View.VISIBLE : View.GONE));
-
-        mViewModel.getIsNetworkError().observe(this, isNetworkError ->
-                ((TextView) view.findViewById(R.id.error_text_view))
-                        .setText(isNetworkError ? getString(R.string.network_error) : getString(R.string.error))
-        );
     }
 }

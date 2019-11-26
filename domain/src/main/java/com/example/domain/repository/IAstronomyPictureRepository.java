@@ -2,14 +2,14 @@ package com.example.domain.repository;
 
 import com.example.domain.model.APODEntity;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.reactivex.Single;
 
 public interface IAstronomyPictureRepository {
 
-    String NETWORK = "network";
-    String DB = "db";
+    @NotNull
+    Single<APODEntity> getAstronomyPicture(@NotNull String date);
 
-    Single<APODEntity> getAstronomyPicture(String date);
-
-    void insertAstronomyPicture(APODEntity apod);
+    void insertAstronomyPicture(@NotNull APODEntity apod);
 }

@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.domain.model.APODEntity;
-import com.example.domain.service.IAstronomyPictureService;
+import com.example.domain.interactor.IAstronomyPictureInteractor;
 import com.example.presentation.utils.DateUtils;
 import com.example.presentation.utils.ErrorUtils;
 
@@ -29,17 +29,19 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isNetworkError = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
-    private final IAstronomyPictureService mService;
+    @NotNull
+    private final IAstronomyPictureInteractor mInteractor;
+    @NotNull
     private final CompositeDisposable mCompositeDisposable;
 
-    public MainViewModel(IAstronomyPictureService service) {
-        mService = service;
+    public MainViewModel(@NotNull IAstronomyPictureInteractor interactor) {
+        mInteractor = interactor;
         mCompositeDisposable = new CompositeDisposable();
     }
 
     @SuppressLint("CheckResult")
     public void showInformation(int currentPositionVIewPage) {
-        mCompositeDisposable.add(mService.getAstronomyPicture(DateUtils.getDateOffset(currentPositionVIewPage))
+        mCompositeDisposable.add(mInteractor.getAstronomyPicture(DateUtils.getDateOffset(currentPositionVIewPage))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {

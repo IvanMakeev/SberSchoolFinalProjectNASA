@@ -3,6 +3,9 @@ package com.example.data.mapper;
 import com.example.data.model.APODRoom;
 import com.example.domain.model.APODEntity;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import javax.inject.Inject;
 
 public class RoomMapper implements IMapper<APODEntity, APODRoom> {
@@ -11,8 +14,9 @@ public class RoomMapper implements IMapper<APODEntity, APODRoom> {
     public RoomMapper() {
     }
 
+    @NotNull
     @Override
-    public APODRoom mapFromEntity(APODEntity type) {
+    public APODRoom mapFromEntity(@NotNull APODEntity type) {
         return new APODRoom(
                 type.getDate(),
                 type.getExplanation(),
@@ -21,8 +25,9 @@ public class RoomMapper implements IMapper<APODEntity, APODRoom> {
                 type.getCopyright());
     }
 
+    @NotNull
     @Override
-    public APODEntity mapToEntity(APODRoom type) {
+    public APODEntity mapToEntity(@Nullable APODRoom type) {
         APODEntity apodEntity;
         if (type != null) {
             apodEntity = new APODEntity(

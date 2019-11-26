@@ -1,4 +1,4 @@
-package com.example.domain.service;
+package com.example.domain.interactor;
 
 import com.example.domain.model.APODEntity;
 
@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import io.reactivex.Single;
 
-public interface IAstronomyPictureService {
+public interface IAstronomyPictureInteractor {
 
     @NotNull
     Single<APODEntity> getAstronomyPicture(@NotNull String date);

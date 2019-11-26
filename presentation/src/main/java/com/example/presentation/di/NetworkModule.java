@@ -1,7 +1,7 @@
 package com.example.presentation.di;
 
 import com.example.data.api.ApiKeyInterceptor;
-import com.example.data.api.INasaApi;
+import com.example.data.api.NasaApi;
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;
@@ -51,7 +51,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    INasaApi provideApiService(Retrofit retrofit) {
-        return retrofit.create(INasaApi.class);
+    NasaApi provideApiService(Retrofit retrofit) {
+        return retrofit.create(NasaApi.class);
     }
 }

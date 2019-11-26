@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.domain.service.IAstronomyPictureService;
+import com.example.domain.interactor.IAstronomyPictureInteractor;
 import com.example.presentation.AppDelegate;
 import com.example.presentation.databinding.MainBinding;
 import com.example.presentation.ui.viewmodel.MainViewModel;
@@ -23,7 +23,7 @@ public class MainFragment extends Fragment {
     private static final String POSITION = "position";
 
     @Inject
-    IAstronomyPictureService mService;
+    IAstronomyPictureInteractor mInteractor;
     private MainViewModel mViewModel;
     private int mCurrentPositionPageAdapter;
 
@@ -42,7 +42,7 @@ public class MainFragment extends Fragment {
         AppDelegate.getInjector().getAppComponent().inject(this);
 
         mCurrentPositionPageAdapter = getArguments() != null ? getArguments().getInt(POSITION) : 0;
-        MainViewModelFactory factory = new MainViewModelFactory(mService);
+        MainViewModelFactory factory = new MainViewModelFactory(mInteractor);
         mViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
         binding.setMainScreen(mViewModel);
         binding.setLifecycleOwner(this);

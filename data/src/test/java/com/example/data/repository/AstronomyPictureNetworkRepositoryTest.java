@@ -1,8 +1,11 @@
 package com.example.data.repository;
 
-import com.example.data.api.INasaApi;
+import com.example.data.api.NasaApi;
+import com.example.data.database.NasaDao;
 import com.example.data.mapper.JsonMapper;
+import com.example.data.mapper.RoomMapper;
 import com.example.data.model.APODJson;
+import com.example.data.model.APODRoom;
 import com.example.domain.model.APODEntity;
 
 import org.junit.Before;
@@ -18,9 +21,10 @@ public class AstronomyPictureNetworkRepositoryTest {
 
     private static final String TEST_DATE = "2019-10-10";
 
-    private AstronomyPictureNetworkRepository mNetworkRepository;
+    private AstronomyPictureRepository mRepository;
     private APODEntity mEnteredEntity;
     private APODJson mEnteredJson;
+    private APODRoom mEnteredRoom;
 
     @Before
     public void setUp() {
@@ -40,20 +44,35 @@ public class AstronomyPictureNetworkRepositoryTest {
                 "copyright"
         );
 
+        mEnteredRoom = new APODRoom(
+                "2019-10-10",
+                "some explamation",
+                "title",
+                "https://apod.nasa.gov/apod/image/",
+                "copyright"
+        );
 
-        INasaApi api = mock(INasaApi.class);
+
+        NasaApi api = mock(NasaApi.class);
         when(api.getAstronomyPicture(TEST_DATE)).thenReturn(Single.fromCallable(() ->
                 mEnteredJson
         ));
-        JsonMapper mapper = mock(JsonMapper.class);
-        when(mapper.mapToEntity(mEnteredJson)).thenReturn(mEnteredEntity);
 
-        mNetworkRepository = new AstronomyPictureNetworkRepository(api, mapper);
+        NasaDao dao = mock(NasaDao.class);
+        when(dao.getAstronomyPicture(TEST_DATE)).thenReturn(mEnteredRoom);
+
+        JsonMapper jsonMapper = mock(JsonMapper.class);
+        when(jsonMapper.mapToEntity(mEnteredJson)).thenReturn(mEnteredEntity);
+
+        RoomMapper roomMapper = mock(RoomMapper.class);
+        when(roomMapper.mapToEntity(mEnteredRoom)).thenReturn(mEnteredEntity);
+
+        mRepository = new AstronomyPictureRepository(api, dao, jsonMapper, roomMapper);
     }
 
     @Test
     public void testGetAstronomyPicture() {
-        TestObserver<APODEntity> observer = mNetworkRepository.getAstronomyPicture(TEST_DATE).test();
+        TestObserver<APODEntity> observer = mRepository.getAstronomyPicture(TEST_DATE).test();
         observer.assertValue(mEnteredEntity);
     }
 }

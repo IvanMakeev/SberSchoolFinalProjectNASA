@@ -10,7 +10,7 @@ import dagger.Component;
 @Component(modules = {AppModule.class,
         NetworkModule.class,
         RepositoryModule.class,
-        ServiceModule.class,
+        InteractorModule.class,
         MapperModule.class})
 public interface AppComponent {
 

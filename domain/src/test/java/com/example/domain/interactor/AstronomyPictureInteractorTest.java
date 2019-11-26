@@ -1,4 +1,4 @@
-package com.example.domain.service;
+package com.example.domain.interactor;
 
 import com.example.domain.model.APODEntity;
 import com.example.domain.repository.IAstronomyPictureRepository;
@@ -8,20 +8,17 @@ import org.junit.Test;
 
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
-import io.reactivex.plugins.RxJavaPlugins;
 
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class AstronomyPictureServiceTest {
+public class AstronomyPictureInteractorTest {
 
     private static final String TEST_DATE = "2019-10-10";
 
     private APODEntity mEnteredEntity;
-    private AstronomyPictureService mService;
-    private IAstronomyPictureRepository mDbRepository;
+    private AstronomyPictureInteractor mInteractor;
 
     @Before
     public void setUp() {
@@ -33,27 +30,21 @@ public class AstronomyPictureServiceTest {
                 "copyright"
         );
 
-        IAstronomyPictureRepository networkRepository = mock(IAstronomyPictureRepository.class);
-        when(networkRepository.getAstronomyPicture(TEST_DATE)).thenReturn(Single.fromCallable(() ->
+        IAstronomyPictureRepository repository = mock(IAstronomyPictureRepository.class);
+        when(repository.getAstronomyPicture(TEST_DATE)).thenReturn(Single.fromCallable(() ->
                 mEnteredEntity));
 
-        mDbRepository = mock(IAstronomyPictureRepository.class);
-        when(mDbRepository.getAstronomyPicture(TEST_DATE)).thenReturn(Single.fromCallable(() ->
-                mEnteredEntity));
-
-
-        mService = new AstronomyPictureService(networkRepository, mDbRepository);
+        mInteractor = new AstronomyPictureInteractor(repository);
     }
 
     @Test
     public void testGetAstronomyPicture() {
-        TestObserver<APODEntity> observer = mService.getAstronomyPicture(TEST_DATE).test();
+        TestObserver<APODEntity> observer = mInteractor.getAstronomyPicture(TEST_DATE).test();
         observer.assertValue(mEnteredEntity);
     }
 
     @Test
     public void testInsertAstronomyPicture() {
-
     }
 
 }

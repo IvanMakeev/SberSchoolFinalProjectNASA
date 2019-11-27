@@ -15,20 +15,21 @@ public class MainViewModelTest {
 
 //    @Rule
 //    InstantTaskExecutorRule
-    
+
     private AstronomyPictureInteractor mInteractor;
     private MainViewModel mViewModel;
+    private int mCurrentPositionPageAdapter = 1;
 
     @Before
     public void setUp() throws Exception {
         mInteractor = mock(AstronomyPictureInteractor.class);
-        mViewModel = new MainViewModel(mInteractor);
+        mViewModel = new MainViewModel(mInteractor, mCurrentPositionPageAdapter);
     }
 
     @Test
     public void testShowInformation() {
         RxAndroidPlugins.getOnMainThreadSchedulerHandler();
-        mViewModel.showInformation(1);
+        mViewModel.showInformation();
         verify(mInteractor).getAstronomyPicture(any());
     }
 }

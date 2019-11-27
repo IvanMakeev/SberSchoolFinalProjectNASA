@@ -1,12 +1,11 @@
 package com.example.presentation.ui.viewmodel;
 
-import android.annotation.SuppressLint;
-
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.domain.model.APODEntity;
 import com.example.domain.interactor.IAstronomyPictureInteractor;
@@ -27,27 +26,31 @@ public class MainViewModel extends ViewModel {
     private final ObservableField<String> mCopyright = new ObservableField<>();
     private final ObservableBoolean isErrorVisible = new ObservableBoolean(false);
     private final MutableLiveData<Boolean> isNetworkError = new MutableLiveData<>(false);
-    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> isLoadingPicture = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>(false);
 
     @NotNull
     private final IAstronomyPictureInteractor mInteractor;
+    private int mCurrentPositionViewPage;
     @NotNull
     private final CompositeDisposable mCompositeDisposable;
 
-    public MainViewModel(@NotNull IAstronomyPictureInteractor interactor) {
+    public MainViewModel(@NotNull IAstronomyPictureInteractor interactor, int currentPositionPageAdapter) {
         mInteractor = interactor;
+        mCurrentPositionViewPage = currentPositionPageAdapter;
         mCompositeDisposable = new CompositeDisposable();
     }
 
-    @SuppressLint("CheckResult")
-    public void showInformation(int currentPositionVIewPage) {
-        mCompositeDisposable.add(mInteractor.getAstronomyPicture(DateUtils.getDateOffset(currentPositionVIewPage))
+    public void showInformation() {
+        mCompositeDisposable.add(mInteractor.getAstronomyPicture(DateUtils.getDateOffset(mCurrentPositionViewPage))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
-                    isLoading.setValue(true);
+                    isLoadingData.setValue(true);
+                    isLoadingPicture.setValue(true);
                     isErrorVisible.set(false);
                 })
+                .doFinally(() -> isLoadingData.postValue(false))
                 .subscribe(this::bindView,
                         throwable -> {
                             if (ErrorUtils.checkNetworkError(throwable)) {
@@ -65,6 +68,10 @@ public class MainViewModel extends ViewModel {
         mExplanation.set(apodEntity.getExplanation());
         mUrlPicture.set(apodEntity.getUrl());
         mCopyright.set(apodEntity.getCopyright());
+    }
+
+    public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
+        return this::showInformation;
     }
 
     @Override
@@ -103,7 +110,11 @@ public class MainViewModel extends ViewModel {
     }
 
     @NotNull
-    public LiveData<Boolean> getIsLoading() {
-        return isLoading;
+    public LiveData<Boolean> getIsLoadingPicture() {
+        return isLoadingPicture;
+    }
+
+    public LiveData<Boolean> getIsLoadingData() {
+        return isLoadingData;
     }
 }

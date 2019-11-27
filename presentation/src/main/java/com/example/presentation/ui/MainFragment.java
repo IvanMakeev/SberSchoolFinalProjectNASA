@@ -25,7 +25,6 @@ public class MainFragment extends Fragment {
     @Inject
     IAstronomyPictureInteractor mInteractor;
     private MainViewModel mViewModel;
-    private int mCurrentPositionPageAdapter;
 
     static MainFragment newInstance(int position) {
         Bundle args = new Bundle();
@@ -41,8 +40,8 @@ public class MainFragment extends Fragment {
         MainBinding binding = MainBinding.inflate(inflater, container, false);
         AppDelegate.getInjector().getAppComponent().inject(this);
 
-        mCurrentPositionPageAdapter = getArguments() != null ? getArguments().getInt(POSITION) : 0;
-        MainViewModelFactory factory = new MainViewModelFactory(mInteractor);
+        int currentPositionPageAdapter = getArguments() != null ? getArguments().getInt(POSITION) : 0;
+        MainViewModelFactory factory = new MainViewModelFactory(mInteractor, currentPositionPageAdapter);
         mViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
         binding.setMainScreen(mViewModel);
         binding.setLifecycleOwner(this);
@@ -52,6 +51,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mViewModel.showInformation(mCurrentPositionPageAdapter);
+        mViewModel.showInformation();
     }
 }

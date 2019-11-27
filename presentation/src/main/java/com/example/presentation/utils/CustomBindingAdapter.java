@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -35,5 +36,15 @@ public class CustomBindingAdapter {
                         }
                     });
         }
+    }
+
+    @BindingAdapter({"bind:refreshState", "bind:onRefresh"})
+    public static void configureSwipeRefreshLayout(
+            SwipeRefreshLayout layout,
+            Boolean isLoading,
+            SwipeRefreshLayout.OnRefreshListener listener
+    ) {
+        layout.setOnRefreshListener(listener);
+        layout.post(() -> layout.setRefreshing(isLoading));
     }
 }

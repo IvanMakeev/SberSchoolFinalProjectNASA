@@ -5,6 +5,7 @@
     <data>
 
         <import type="android.text.TextUtils" />
+
         <import type="android.view.View" />
 
         <variable
@@ -34,16 +35,16 @@
                 android:paddingTop="@dimen/default_padding"
                 android:paddingEnd="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
-                bind:loadImage="@{mainScreen.urlPicture}"
                 bind:errorPlaceholder="@{@drawable/ic_image_black_96dp}"
-                bind:progress="@{mainScreen.getIsLoading}" />
+                bind:loadImage="@{mainScreen.urlPicture}"
+                bind:progress="@{mainScreen.isLoadingPicture}" />
 
             <ProgressBar
                 android:id="@+id/load_progress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:visibility="@{mainScreen.isLoading ? View.VISIBLE : View.GONE}"/>
+                android:visibility="@{mainScreen.isLoadingPicture ? View.VISIBLE : View.GONE}" />
 
             <TextView
                 android:id="@+id/title_text_view"
@@ -66,9 +67,9 @@
                 android:id="@+id/copyright_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/default_padding"
                 android:paddingStart="@dimen/default_padding"
                 android:paddingEnd="@dimen/default_padding"
+                android:paddingBottom="@dimen/default_padding"
                 android:text="@{@string/copyright(TextUtils.isEmpty(mainScreen.copyright) ? @string/free_access : mainScreen.copyright)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" />
         </LinearLayout>

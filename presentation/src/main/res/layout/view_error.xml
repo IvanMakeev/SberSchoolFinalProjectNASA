@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,29 +9,36 @@
             type="com.example.presentation.ui.viewmodel.MainViewModel" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/error_view"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        bind:onRefresh="@{mainScreen.getOnRefreshListener()}"
+        bind:refreshState="@{mainScreen.isLoadingData}">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/error"
-            android:src="@drawable/ic_error" />
+        <LinearLayout
+            android:id="@+id/error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/error_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:text="@{mainScreen.isNetworkError ? @string/network_error : @string/error}"
-            android:textColor="#a40616"
-            android:textSize="@dimen/error_text_size"
-            android:textStyle="bold" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/error"
+                android:src="@drawable/ic_error" />
 
+            <TextView
+                android:id="@+id/error_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@{mainScreen.isNetworkError ? @string/network_error : @string/error}"
+                android:textColor="#a40616"
+                android:textSize="@dimen/error_text_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </LinearLayout>
 </layout>

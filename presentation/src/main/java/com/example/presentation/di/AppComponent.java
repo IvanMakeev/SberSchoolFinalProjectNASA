@@ -9,9 +9,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class,
         NetworkModule.class,
-        RepositoryModule.class,
-        InteractorModule.class,
-        MapperModule.class})
+        InteractorModule.class})
 public interface AppComponent {
 
     void inject(MainFragment injector);

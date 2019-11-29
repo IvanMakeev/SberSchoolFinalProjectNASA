@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.domain.interactor.IAstronomyPictureInteractor;
+import com.example.presentation.utils.scheduler.IBaseSchedulerProvider;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -12,10 +13,15 @@ public class MainViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     @NotNull
     private final IAstronomyPictureInteractor mInteractor;
-    private int mCurrentPositionPageAdapter;
+    @NotNull
+    private final IBaseSchedulerProvider mSchedulerProvider;
+    private final int mCurrentPositionPageAdapter;
 
-    public MainViewModelFactory(@NotNull IAstronomyPictureInteractor interactor, int currentPositionPageAdapter) {
+    public MainViewModelFactory(@NotNull IAstronomyPictureInteractor interactor,
+                                @NotNull IBaseSchedulerProvider schedulerProvider,
+                                int currentPositionPageAdapter) {
         mInteractor = interactor;
+        mSchedulerProvider = schedulerProvider;
         mCurrentPositionPageAdapter = currentPositionPageAdapter;
     }
 
@@ -23,6 +29,6 @@ public class MainViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @NotNull
     @Override
     public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
-        return (T) new MainViewModel(mInteractor, mCurrentPositionPageAdapter);
+        return (T) new MainViewModel(mInteractor, mSchedulerProvider, mCurrentPositionPageAdapter);
     }
 }

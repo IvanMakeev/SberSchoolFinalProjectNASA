@@ -15,6 +15,7 @@ import com.example.presentation.AppDelegate;
 import com.example.presentation.databinding.MainBinding;
 import com.example.presentation.ui.viewmodel.MainViewModel;
 import com.example.presentation.ui.viewmodel.MainViewModelFactory;
+import com.example.presentation.utils.scheduler.IBaseSchedulerProvider;
 
 import javax.inject.Inject;
 
@@ -24,6 +25,8 @@ public class MainFragment extends Fragment {
 
     @Inject
     IAstronomyPictureInteractor mInteractor;
+    @Inject
+    IBaseSchedulerProvider mSchedulerProvider;
     private MainViewModel mViewModel;
 
     static MainFragment newInstance(int position) {
@@ -41,7 +44,7 @@ public class MainFragment extends Fragment {
         AppDelegate.getInjector().getAppComponent().inject(this);
 
         int currentPositionPageAdapter = getArguments() != null ? getArguments().getInt(POSITION) : 0;
-        MainViewModelFactory factory = new MainViewModelFactory(mInteractor, currentPositionPageAdapter);
+        MainViewModelFactory factory = new MainViewModelFactory(mInteractor, mSchedulerProvider, currentPositionPageAdapter);
         mViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
         binding.setMainScreen(mViewModel);
         binding.setLifecycleOwner(this);

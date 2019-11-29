@@ -11,6 +11,7 @@ import io.reactivex.observers.TestObserver;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 public class AstronomyPictureInteractorTest {
@@ -19,6 +20,7 @@ public class AstronomyPictureInteractorTest {
 
     private APODEntity mEnteredEntity;
     private AstronomyPictureInteractor mInteractor;
+    private IAstronomyPictureRepository mRepository;
 
     @Before
     public void setUp() {
@@ -30,21 +32,28 @@ public class AstronomyPictureInteractorTest {
                 "copyright"
         );
 
-        IAstronomyPictureRepository repository = mock(IAstronomyPictureRepository.class);
-        when(repository.getAstronomyPicture(TEST_DATE)).thenReturn(Single.fromCallable(() ->
-                mEnteredEntity));
+        mRepository = mock(IAstronomyPictureRepository.class);
 
-        mInteractor = new AstronomyPictureInteractor(repository);
+        mInteractor = new AstronomyPictureInteractor(mRepository);
     }
 
     @Test
     public void testGetAstronomyPicture() {
+        when(mRepository.getAstronomyPicture(TEST_DATE)).thenReturn(Single.fromCallable(() -> mEnteredEntity));
+
         TestObserver<APODEntity> observer = mInteractor.getAstronomyPicture(TEST_DATE).test();
         observer.assertValue(mEnteredEntity);
+        observer.dispose();
+        verify(mRepository).getAstronomyPicture(TEST_DATE);
+        verifyZeroInteractions(mRepository);
+
     }
 
     @Test
     public void testInsertAstronomyPicture() {
+        mInteractor.insertAstronomyPicture(mEnteredEntity);
+        verify(mRepository).insertAstronomyPicture(mEnteredEntity);
+        verifyZeroInteractions(mRepository);
     }
 
 }

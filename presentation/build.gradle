@@ -40,12 +40,15 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+
     //data binding
     annotationProcessor "androidx.databinding:databinding-compiler:$android_plugin_version"
 
     // ViewModel and LiveData
     def lifecycle_version = "2.1.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+
 
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -55,7 +58,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //room
-    def room_version = "1.1.1"
+    def room_version = "2.2.2"
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
 

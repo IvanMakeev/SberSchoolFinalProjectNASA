@@ -7,16 +7,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.domain.exception.NetworkAccessException;
 import com.example.domain.model.APODEntity;
 import com.example.domain.interactor.IAstronomyPictureInteractor;
 import com.example.presentation.utils.DateUtils;
-import com.example.presentation.utils.ErrorUtils;
+import com.example.presentation.utils.scheduler.IBaseSchedulerProvider;
 
 import org.jetbrains.annotations.NotNull;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainViewModel extends ViewModel {
 
@@ -31,35 +30,39 @@ public class MainViewModel extends ViewModel {
 
     @NotNull
     private final IAstronomyPictureInteractor mInteractor;
-    private int mCurrentPositionViewPage;
+    @NotNull
+    private final IBaseSchedulerProvider mSchedulerProvider;
+    private final int mCurrentPositionViewPage;
     @NotNull
     private final CompositeDisposable mCompositeDisposable;
 
-    public MainViewModel(@NotNull IAstronomyPictureInteractor interactor, int currentPositionPageAdapter) {
+    public MainViewModel(@NotNull IAstronomyPictureInteractor interactor,
+                         @NotNull IBaseSchedulerProvider schedulerProvider,
+                         int currentPositionPageAdapter) {
         mInteractor = interactor;
+        mSchedulerProvider = schedulerProvider;
         mCurrentPositionViewPage = currentPositionPageAdapter;
         mCompositeDisposable = new CompositeDisposable();
     }
 
     public void showInformation() {
-        mCompositeDisposable.add(mInteractor.getAstronomyPicture(DateUtils.getDateOffset(mCurrentPositionViewPage))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> {
-                    isLoadingData.setValue(true);
-                    isLoadingPicture.setValue(true);
-                    isErrorVisible.set(false);
-                })
-                .doFinally(() -> isLoadingData.postValue(false))
-                .subscribe(this::bindView,
-                        throwable -> {
-                            if (ErrorUtils.checkNetworkError(throwable)) {
-                                isNetworkError.setValue(true);
-                            } else {
-                                isNetworkError.setValue(false);
-                            }
-                            isErrorVisible.set(true);
+        mCompositeDisposable.add(
+                mInteractor.getAstronomyPicture(DateUtils.getDateOffset(mCurrentPositionViewPage))
+                        .subscribeOn(mSchedulerProvider.io())
+                        .observeOn(mSchedulerProvider.mainThread())
+                        .doOnSubscribe(disposable -> {
+                            isLoadingData.setValue(true);
+                            isLoadingPicture.setValue(true);
+                            isErrorVisible.set(false);
                         })
+                        .doFinally(() -> isLoadingData.setValue(false))
+                        .subscribe(this::bindView,
+                                throwable -> {
+                                    if (throwable instanceof NetworkAccessException) {
+                                        isNetworkError.setValue(true);
+                                    }
+                                    isErrorVisible.set(true);
+                                })
         );
     }
 

@@ -1,5 +1,7 @@
 package com.example.presentation.utils.scheduler;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.inject.Inject;
 
 import io.reactivex.Scheduler;
@@ -12,16 +14,19 @@ public class SchedulerProvider implements IBaseSchedulerProvider {
     public SchedulerProvider() {
     }
 
+    @NotNull
     @Override
     public Scheduler io() {
         return Schedulers.io();
     }
 
+    @NotNull
     @Override
     public Scheduler computation() {
         return Schedulers.computation();
     }
 
+    @NotNull
     @Override
     public Scheduler mainThread() {
         return AndroidSchedulers.mainThread();

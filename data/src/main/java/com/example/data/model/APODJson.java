@@ -31,7 +31,11 @@ public final class APODJson {
     private final String mCopyright;
 
 
-    public APODJson(@NotNull String date, @NotNull String explanation, @NotNull String title, @NotNull String url, @Nullable String copyright) {
+    public APODJson(@NotNull String date,
+                    @NotNull String explanation,
+                    @NotNull String title,
+                    @NotNull String url,
+                    @Nullable String copyright) {
         mDate = date;
         mExplanation = explanation;
         mTitle = title;

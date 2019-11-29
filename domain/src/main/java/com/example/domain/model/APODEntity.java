@@ -18,7 +18,11 @@ public final class APODEntity {
     @NotNull
     private final String mCopyright;
 
-    public APODEntity(@NotNull String date, @NotNull String explanation, @NotNull String title, @NotNull String url, @NotNull String copyright) {
+    public APODEntity(@NotNull String date,
+                      @NotNull String explanation,
+                      @NotNull String title,
+                      @NotNull String url,
+                      @NotNull String copyright) {
         mDate = date;
         mExplanation = explanation;
         mTitle = title;

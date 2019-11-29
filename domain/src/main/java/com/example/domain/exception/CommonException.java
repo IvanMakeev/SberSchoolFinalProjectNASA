@@ -1,7 +1,9 @@
 package com.example.domain.exception;
 
+import org.jetbrains.annotations.NotNull;
+
 public class CommonException extends Exception {
-    public CommonException(Throwable throwable) {
+    public CommonException(@NotNull Throwable throwable) {
         super(throwable);
     }
 }

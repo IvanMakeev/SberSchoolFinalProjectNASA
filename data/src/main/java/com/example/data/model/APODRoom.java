@@ -34,7 +34,11 @@ public final class APODRoom {
     private final String mCopyright;
 
 
-    public APODRoom(@NotNull String date, @NotNull String explanation, @NotNull String title, @NotNull String url, @Nullable String copyright) {
+    public APODRoom(@NotNull String date,
+                    @NotNull String explanation,
+                    @NotNull String title,
+                    @NotNull String url,
+                    @Nullable String copyright) {
         mDate = date;
         mExplanation = explanation;
         mTitle = title;

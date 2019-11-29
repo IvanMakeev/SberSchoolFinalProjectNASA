@@ -12,10 +12,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 public class CustomBindingAdapter {
     @SuppressWarnings("unchecked cast")
     @BindingAdapter({"bind:loadImage", "bind:errorPlaceholder", "bind:progress"})
-    public static void loadImage(ImageView imageView, ObservableField<String> urlImage, Drawable error, LiveData<Boolean> progress) {
+    public static void loadImage(@NotNull ImageView imageView,
+                                 @NotNull ObservableField<String> urlImage,
+                                 @NotNull Drawable error,
+                                 @NotNull LiveData<Boolean> progress) {
         if (imageView.getDrawable() == null) {
             Picasso.get()
                     .load(urlImage.get())
@@ -40,9 +45,9 @@ public class CustomBindingAdapter {
 
     @BindingAdapter({"bind:refreshState", "bind:onRefresh"})
     public static void configureSwipeRefreshLayout(
-            SwipeRefreshLayout layout,
-            Boolean isLoading,
-            SwipeRefreshLayout.OnRefreshListener listener
+            @NotNull SwipeRefreshLayout layout,
+            @NotNull Boolean isLoading,
+            @NotNull SwipeRefreshLayout.OnRefreshListener listener
     ) {
         layout.setOnRefreshListener(listener);
         layout.post(() -> layout.setRefreshing(isLoading));

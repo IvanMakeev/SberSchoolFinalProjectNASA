@@ -1,7 +1,9 @@
 package com.example.domain.exception;
 
+import org.jetbrains.annotations.NotNull;
+
 public class NetworkAccessException extends Exception {
-    public NetworkAccessException(Throwable throwable) {
+    public NetworkAccessException(@NotNull Throwable throwable) {
         super(throwable);
     }
 }

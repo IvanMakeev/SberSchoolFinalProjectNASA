@@ -6,6 +6,8 @@ import com.example.presentation.di.AppComponent;
 import com.example.presentation.di.AppModule;
 import com.example.presentation.di.DaggerAppComponent;
 
+import org.jetbrains.annotations.NotNull;
+
 public final class AppDelegate extends Application {
 
     private static AppDelegate INSTANCE;
@@ -20,10 +22,12 @@ public final class AppDelegate extends Application {
                 .build();
     }
 
+    @NotNull
     public static AppDelegate getInjector() {
         return INSTANCE;
     }
 
+    @NotNull
     public AppComponent getAppComponent() {
         return appComponent;
     }

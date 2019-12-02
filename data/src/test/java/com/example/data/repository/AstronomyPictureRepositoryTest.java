@@ -36,7 +36,7 @@ public class AstronomyPictureRepositoryTest {
     public void setUp() {
         mEnteredEntity = new APODEntity(
                 "2019-10-10",
-                "some explamation",
+                "some explanation",
                 "title",
                 "https://apod.nasa.gov/apod/image/",
                 "copyright"
@@ -52,7 +52,7 @@ public class AstronomyPictureRepositoryTest {
 
         mEnteredJson = new APODJson(
                 "2019-10-10",
-                "some explamation",
+                "some explanation",
                 "title",
                 "https://apod.nasa.gov/apod/image/",
                 "copyright"
@@ -60,7 +60,7 @@ public class AstronomyPictureRepositoryTest {
 
         mEnteredRoom = new APODRoom(
                 "2019-10-10",
-                "some explamation",
+                "some explanation",
                 "title",
                 "https://apod.nasa.gov/apod/image/",
                 "copyright"

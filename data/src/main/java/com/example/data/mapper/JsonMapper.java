@@ -7,6 +7,10 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 
+/**
+ * Реализация маппинга из json в entity и наоборот
+ */
+
 public class JsonMapper implements IMapper<APODEntity, APODJson> {
 
     @Inject

@@ -8,6 +8,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
+/**
+ * Pojo class для работы с Json
+ */
 public final class APODJson {
 
     @SerializedName("date")

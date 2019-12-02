@@ -35,7 +35,7 @@ public class NasaDaoTest {
 
         entered = new APODRoom(
                 "2019-10-10",
-                "some explamation",
+                "some explanation",
                 "title",
                 "https://apod.nasa.gov/apod/image/",
                 "copyright"

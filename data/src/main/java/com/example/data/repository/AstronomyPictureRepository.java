@@ -14,6 +14,9 @@ import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 
+/**
+ * Реализация репозитория для получения и сохранения данных
+ */
 public class AstronomyPictureRepository implements IAstronomyPictureRepository {
 
     @NotNull
@@ -25,6 +28,12 @@ public class AstronomyPictureRepository implements IAstronomyPictureRepository {
     @NotNull
     private final IMapper<APODEntity, APODRoom> mRoomMapper;
 
+    /**
+     * @param api        используется для работы web api
+     * @param dao        используется для работы c room api
+     * @param jsonMapper используется для маппинга данных из json в entity и наоборот
+     * @param roomMapper используется для маппинга данных из room в entity и наоборот
+     */
     public AstronomyPictureRepository(
             @NotNull NasaApi api,
             @NotNull NasaDao dao,
@@ -36,6 +45,12 @@ public class AstronomyPictureRepository implements IAstronomyPictureRepository {
         mRoomMapper = roomMapper;
     }
 
+    /**
+     * Получение данных
+     *
+     * @param date дата для которой необходимо получить данные
+     * @return возвращает Single с данными для отображения пользователю
+     */
     @NotNull
     @Override
     public Single<APODEntity> getAstronomyPicture(@NotNull String date) {
@@ -43,6 +58,11 @@ public class AstronomyPictureRepository implements IAstronomyPictureRepository {
                 .flatMap(getSource(date));
     }
 
+    /**
+     * Сохранение данных
+     *
+     * @param apod pojo объект для сохранения данных
+     */
     @Override
     public void insertAstronomyPicture(@NotNull APODEntity apod) {
         mDao.insertAstronomyPicture(mRoomMapper.mapFromEntity(apod));

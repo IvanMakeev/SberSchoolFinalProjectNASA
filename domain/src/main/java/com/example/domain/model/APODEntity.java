@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+/**
+ * Астрономическая картинка дня
+ */
 public final class APODEntity {
 
     @NotNull

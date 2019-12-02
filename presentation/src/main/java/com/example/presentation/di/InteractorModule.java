@@ -22,6 +22,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * Модуль внедренения зависимостей для работы с интерактором
+ */
 @Module
 class InteractorModule {
 

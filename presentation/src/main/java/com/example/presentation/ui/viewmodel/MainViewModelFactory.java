@@ -17,6 +17,11 @@ public class MainViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private final IBaseSchedulerProvider mSchedulerProvider;
     private final int mCurrentPositionPageAdapter;
 
+    /**
+     * @param interactor                 экземпляр интерактора
+     * @param schedulerProvider          обертка над планировщиками RxJava
+     * @param currentPositionPageAdapter текущая позиция PageAdapter'a на экране
+     */
     public MainViewModelFactory(@NotNull IAstronomyPictureInteractor interactor,
                                 @NotNull IBaseSchedulerProvider schedulerProvider,
                                 int currentPositionPageAdapter) {

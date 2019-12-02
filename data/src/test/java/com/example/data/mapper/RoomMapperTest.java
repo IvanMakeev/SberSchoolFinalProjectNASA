@@ -22,7 +22,7 @@ public class RoomMapperTest {
         mMapper = new RoomMapper();
         mEnteredRoom = new APODRoom(
                 "2019-10-10",
-                "some explamation",
+                "some explanation",
                 "title",
                 "https://apod.nasa.gov/apod/image/",
                 "copyright"
@@ -30,7 +30,7 @@ public class RoomMapperTest {
 
         mEnteredEntity = new APODEntity(
                 "2019-10-10",
-                "some explamation",
+                "some explanation",
                 "title",
                 "https://apod.nasa.gov/apod/image/",
                 "copyright"

@@ -29,8 +29,8 @@ public class MainViewModelTest {
     public InstantTaskExecutorRule mInstantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private APODEntity mEnteredEntity;
-    private int mCurrentPositionPageAdapter = 0;
-    private String testDate = DateUtils.getDateOffset(mCurrentPositionPageAdapter);
+    private final int mCurrentPositionPageAdapter = 0;
+    private final String testDate = DateUtils.getDateOffset(mCurrentPositionPageAdapter);
 
 
     private IAstronomyPictureInteractor mInteractor;
@@ -38,11 +38,11 @@ public class MainViewModelTest {
     private IBaseSchedulerProvider mSchedulerProvider;
 
     @Before
-    public void setUp()  {
+    public void setUp() {
 
         mEnteredEntity = new APODEntity(
                 testDate,
-                "some explamation",
+                "some explanation",
                 "title",
                 "https://apod.nasa.gov/apod/image/",
                 "copyright"
@@ -74,7 +74,7 @@ public class MainViewModelTest {
 
     @Test
     public void testShowInformationNetworkAccessException() {
-        when(mInteractor.getAstronomyPicture(any())).thenReturn(Single.error(new NetworkAccessException(new Throwable())));
+        when(mInteractor.getAstronomyPicture(testDate)).thenReturn(Single.error(new NetworkAccessException(new Throwable())));
 
         mViewModel.showInformation();
 
@@ -93,7 +93,7 @@ public class MainViewModelTest {
 
     @Test
     public void testShowInformationCommonException() {
-        when(mInteractor.getAstronomyPicture(any())).thenReturn(Single.error(new CommonException(new Throwable())));
+        when(mInteractor.getAstronomyPicture(testDate)).thenReturn(Single.error(new CommonException(new Throwable())));
 
         mViewModel.showInformation();
 

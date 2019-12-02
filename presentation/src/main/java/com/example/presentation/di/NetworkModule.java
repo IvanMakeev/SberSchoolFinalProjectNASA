@@ -16,15 +16,24 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Модуль внедренения зависимостей для работы с сетью
+ */
 @Module
 class NetworkModule {
 
+    /**
+     * @return возвращает экземпляр Gson
+     */
     @Provides
     @Singleton
     Gson provideGson() {
         return new Gson();
     }
 
+    /**
+     * @return возвращает экземпляр OkHttpClient
+     */
     @Provides
     @Singleton
     OkHttpClient provideClient() {
@@ -38,6 +47,9 @@ class NetworkModule {
         return builder.build();
     }
 
+    /**
+     * @return возвращает экземпляр Retrofit
+     */
     @Provides
     @Singleton
     Retrofit provideRetrofit(OkHttpClient okHttpClient) {
@@ -49,6 +61,9 @@ class NetworkModule {
                 .build();
     }
 
+    /**
+     * @return возвращает экземпляр NasaApi для работы с web api
+     */
     @Provides
     @Singleton
     NasaApi provideApiService(Retrofit retrofit) {

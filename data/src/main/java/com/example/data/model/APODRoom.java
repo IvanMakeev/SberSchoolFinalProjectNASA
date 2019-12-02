@@ -9,6 +9,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
+/**
+ * Pojo class для работы с Room
+ */
 @Entity
 public final class APODRoom {
 

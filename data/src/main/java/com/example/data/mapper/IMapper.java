@@ -2,6 +2,11 @@ package com.example.data.mapper;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Интерфейс для маппинга данных
+ * @param <E>   маппинг в entity
+ * @param <D>   маппинг в data
+ */
 public interface IMapper<E, D> {
 
     String JSON = "json";

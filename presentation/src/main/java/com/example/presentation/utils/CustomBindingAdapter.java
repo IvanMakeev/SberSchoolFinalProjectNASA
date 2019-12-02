@@ -15,6 +15,14 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 public class CustomBindingAdapter {
+
+    /**
+     * @param imageView экземпляр текущего ImageView
+     * @param urlImage  url для скачивания картинки
+     * @param error     заглушка на случай возникновения ошибок, при загрузке картинки
+     * @param progress  состояние progress bar'а, используется что бы задать Visibility=GONE,
+     *                  на случай успеха или ошибки скачивания
+     */
     @SuppressWarnings("unchecked cast")
     @BindingAdapter({"bind:loadImage", "bind:errorPlaceholder", "bind:progress"})
     public static void loadImage(@NotNull ImageView imageView,
@@ -43,6 +51,11 @@ public class CustomBindingAdapter {
         }
     }
 
+    /**
+     * @param layout    экземпляр для работы со свайпом
+     * @param isLoading состояние загрузки данных на экране
+     * @param listener  экземпляр слушателя для обновления данных
+     */
     @BindingAdapter({"bind:refreshState", "bind:onRefresh"})
     public static void configureSwipeRefreshLayout(
             @NotNull SwipeRefreshLayout layout,

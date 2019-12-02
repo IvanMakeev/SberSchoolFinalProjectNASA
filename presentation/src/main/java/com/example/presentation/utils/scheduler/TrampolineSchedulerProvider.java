@@ -5,6 +5,10 @@ import org.jetbrains.annotations.NotNull;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * Реализация интерфейса-обертки над планировщиками RxJava, используется для тестирования
+ */
+
 public class TrampolineSchedulerProvider implements IBaseSchedulerProvider {
 
     @NotNull

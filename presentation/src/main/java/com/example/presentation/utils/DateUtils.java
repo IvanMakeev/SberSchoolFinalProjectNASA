@@ -13,11 +13,21 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+/**
+ * Утилитный класс
+ */
 public final class DateUtils {
 
 
-    private DateUtils() { }
+    private DateUtils() {
+    }
 
+    /**
+     * Метод для получения отформатированной текущей даты
+     *
+     * @param currentPosition текущая позиция элемента на экрана, по которй идет вычесление сдвига текущей даты
+     * @return отформатированная дата
+     */
     @NotNull
     public static String getDateOffset(int currentPosition) {
         Calendar calendar = Calendar.getInstance();
@@ -26,12 +36,11 @@ public final class DateUtils {
         return formattingDate(dateWithOffset);
     }
 
-    @NotNull
-    private static String formattingDate(@NotNull Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        return dateFormat.format(date);
-    }
-
+    /**
+     * Для получения количества дней в году
+     *
+     * @return количество дней в году
+     */
     public static int getLengthOfYear() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return YearMonth.now().lengthOfYear();
@@ -43,5 +52,11 @@ public final class DateUtils {
             Calendar gregorianCalendar = new GregorianCalendar(year, month, day);
             return gregorianCalendar.getActualMaximum(Calendar.DAY_OF_YEAR);
         }
+    }
+
+    @NotNull
+    private static String formattingDate(@NotNull Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return dateFormat.format(date);
     }
 }

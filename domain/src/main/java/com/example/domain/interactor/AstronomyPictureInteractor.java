@@ -16,12 +16,18 @@ import java.util.List;
 
 import io.reactivex.Single;
 
+/**
+ * Реализация интерактора, отвечающего за операции связанные с получением и сохранением данных
+ */
 public class AstronomyPictureInteractor implements IAstronomyPictureInteractor {
 
     @NotNull
     private final IAstronomyPictureRepository mRepository;
 
-    private static List<Class<? extends IOException>> networkErrorList = Arrays.asList(
+    /**
+     * Список содержащий в себе классы с сетевыми исключениями
+     */
+    private final static List<Class<? extends IOException>> networkErrorList = Arrays.asList(
             UnknownHostException.class,
             SocketTimeoutException.class,
             ConnectException.class
@@ -31,6 +37,12 @@ public class AstronomyPictureInteractor implements IAstronomyPictureInteractor {
         mRepository = repository;
     }
 
+    /**
+     * Получение данных
+     *
+     * @param date дата для которой необходимо получить данные
+     * @return возвращает Single с данными для отображения пользователю
+     */
     @NotNull
     @Override
     public Single<APODEntity> getAstronomyPicture(@NotNull String date) {
@@ -43,6 +55,11 @@ public class AstronomyPictureInteractor implements IAstronomyPictureInteractor {
                 });
     }
 
+    /**
+     * Сохранение данных
+     *
+     * @param apod pojo объект для сохранения данных
+     */
     @Override
     public void insertAstronomyPicture(@NotNull APODEntity apod) {
         mRepository.insertAstronomyPicture(apod);

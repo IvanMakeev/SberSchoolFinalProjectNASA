@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static class PageAdapter extends FragmentStatePagerAdapter {
 
-        private Resources mResources;
+        private final Resources mResources;
 
         PageAdapter(@NonNull FragmentManager fm, int behavior, Context context) {
             super(fm, behavior);

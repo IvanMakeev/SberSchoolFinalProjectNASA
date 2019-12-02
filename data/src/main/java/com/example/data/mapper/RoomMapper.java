@@ -8,6 +8,10 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
 
+/**
+ * Реализация маппинга из room в entity и наоборот
+ */
+
 public class RoomMapper implements IMapper<APODEntity, APODRoom> {
 
     @Inject

@@ -17,6 +17,9 @@ import org.jetbrains.annotations.NotNull;
 
 import io.reactivex.disposables.CompositeDisposable;
 
+/**
+ * ViewModel предоставления астронамической картинки
+ */
 public class MainViewModel extends ViewModel {
 
     private final ObservableField<String> mTitle = new ObservableField<>();
@@ -36,6 +39,11 @@ public class MainViewModel extends ViewModel {
     @NotNull
     private final CompositeDisposable mCompositeDisposable;
 
+    /**
+     * @param interactor                 экземпляр интерактора
+     * @param schedulerProvider          обертка над планировщиками RxJava
+     * @param currentPositionPageAdapter текущая позиция PageAdapter'a на экране
+     */
     public MainViewModel(@NotNull IAstronomyPictureInteractor interactor,
                          @NotNull IBaseSchedulerProvider schedulerProvider,
                          int currentPositionPageAdapter) {
@@ -45,6 +53,9 @@ public class MainViewModel extends ViewModel {
         mCompositeDisposable = new CompositeDisposable();
     }
 
+    /**
+     * Загрузка и отображение данных на экране
+     */
     public void showInformation() {
         mCompositeDisposable.add(
                 mInteractor.getAstronomyPicture(DateUtils.getDateOffset(mCurrentPositionViewPage))
@@ -73,6 +84,11 @@ public class MainViewModel extends ViewModel {
         mCopyright.set(apodEntity.getCopyright());
     }
 
+    /**
+     * Обновление данных на экране в случае возникновения ошибки
+     *
+     * @return возвращает OnRefreshListener
+     */
     public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
         return this::showInformation;
     }
@@ -82,41 +98,65 @@ public class MainViewModel extends ViewModel {
         mCompositeDisposable.dispose();
     }
 
+    /**
+     * Строка с заголовком
+     */
     @NotNull
     public ObservableField<String> getTitle() {
         return mTitle;
     }
 
+    /**
+     * Строка с описанием
+     */
     @NotNull
     public ObservableField<String> getExplanation() {
         return mExplanation;
     }
 
+    /**
+     * Строка с url картинки
+     */
     @NotNull
     public ObservableField<String> getUrlPicture() {
         return mUrlPicture;
     }
 
+    /**
+     * Строка с полем copyright
+     */
     @NotNull
     public ObservableField<String> getCopyright() {
         return mCopyright;
     }
 
+    /**
+     * Состояние видимости ошибки
+     */
     @NotNull
     public ObservableBoolean getIsErrorVisible() {
         return isErrorVisible;
     }
 
+    /**
+     * Состояние видимости сетевой ошибки
+     */
     @NotNull
     public LiveData<Boolean> getIsNetworkError() {
         return isNetworkError;
     }
 
+    /**
+     * Состояние загрузки картинки (используется для progress bar)
+     */
     @NotNull
     public LiveData<Boolean> getIsLoadingPicture() {
         return isLoadingPicture;
     }
 
+    /**
+     * Состояние загрузки данных
+     */
     public LiveData<Boolean> getIsLoadingData() {
         return isLoadingData;
     }

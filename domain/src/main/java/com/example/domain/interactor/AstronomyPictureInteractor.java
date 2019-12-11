@@ -48,10 +48,11 @@ public class AstronomyPictureInteractor implements IAstronomyPictureInteractor {
     public Single<APODEntity> getAstronomyPicture(@NotNull String date) {
         return mRepository.getAstronomyPicture(date)
                 .onErrorResumeNext(throwable -> {
-                    if (networkErrorList.contains(((Exception) throwable).getClass())) {
-                        return Single.error(new NetworkAccessException(throwable));
-                    }
-                    return Single.error(new CommonException(throwable));
+                    boolean isError = networkErrorList.contains(((Exception) throwable).getClass());
+                    Exception exception = isError ?
+                            new NetworkAccessException(throwable) :
+                            new CommonException(throwable);
+                    return Single.error(exception);
                 });
     }
 

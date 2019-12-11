@@ -14,10 +14,14 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.example.presentation.R;
+import com.example.presentation.ui.fragment.ImageFragment;
+import com.example.presentation.ui.fragment.MainFragment;
 import com.example.presentation.utils.DateUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ZoomClickListener {
 
+    private static final String JPG = ".jpg";
+    private static final String PNG = ".png";
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -30,6 +34,18 @@ public class MainActivity extends AppCompatActivity {
         mPager = findViewById(R.id.pager);
         mPagerAdapter = new PageAdapter(getSupportFragmentManager(), 0, this);
         mPager.setAdapter(mPagerAdapter);
+    }
+
+    @Override
+    public void onZoomImage(String url) {
+        if (url.endsWith(JPG) || url.endsWith(PNG)) {
+            ImageFragment imageFragment = ImageFragment.newInstance(url);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.root_view, imageFragment)
+                    .commit();
+        }
     }
 
     private static class PageAdapter extends FragmentStatePagerAdapter {

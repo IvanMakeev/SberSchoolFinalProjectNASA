@@ -1,4 +1,4 @@
-package com.example.presentation.ui;
+package com.example.presentation.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.domain.interactor.IAstronomyPictureInteractor;
 import com.example.presentation.AppDelegate;
 import com.example.presentation.databinding.MainBinding;
+import com.example.presentation.ui.ZoomClickListener;
 import com.example.presentation.ui.viewmodel.MainViewModel;
 import com.example.presentation.ui.viewmodel.MainViewModelFactory;
 import com.example.presentation.utils.scheduler.IBaseSchedulerProvider;
@@ -29,7 +30,7 @@ public class MainFragment extends Fragment {
     IBaseSchedulerProvider mSchedulerProvider;
     private MainViewModel mViewModel;
 
-    static MainFragment newInstance(int position) {
+    public static MainFragment newInstance(int position) {
         Bundle args = new Bundle();
         args.putInt(POSITION, position);
         MainFragment fragment = new MainFragment();
@@ -46,6 +47,12 @@ public class MainFragment extends Fragment {
         int currentPositionPageAdapter = getArguments() != null ? getArguments().getInt(POSITION) : 0;
         MainViewModelFactory factory = new MainViewModelFactory(mInteractor, mSchedulerProvider, currentPositionPageAdapter);
         mViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
+
+        mViewModel.setClickListener(v -> {
+            String url = mViewModel.getUrlPicture().get();
+            ((ZoomClickListener) requireActivity()).onZoomImage(url);
+        });
+
         binding.setMainScreen(mViewModel);
         binding.setLifecycleOwner(this);
         return binding.getRoot();

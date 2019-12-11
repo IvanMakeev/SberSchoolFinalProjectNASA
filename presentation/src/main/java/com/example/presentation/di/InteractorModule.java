@@ -57,7 +57,7 @@ class InteractorModule {
 
     @Provides
     @Singleton
-    IAstronomyPictureInteractor provideAstronomyPictureService(IAstronomyPictureRepository repository) {
+    IAstronomyPictureInteractor provideAstronomyPictureInteractor(IAstronomyPictureRepository repository) {
         return new AstronomyPictureInteractor(repository);
     }
 

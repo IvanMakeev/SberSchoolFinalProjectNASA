@@ -37,7 +37,8 @@
                 android:paddingRight="@dimen/default_padding"
                 bind:errorPlaceholder="@{@drawable/ic_image_black_96dp}"
                 bind:loadImage="@{mainScreen.urlPicture}"
-                bind:progress="@{mainScreen.isLoadingPicture}" />
+                bind:progress="@{mainScreen.isLoadingPicture}"
+                bind:clickListener="@{mainScreen.getClickListener()}"/>
 
             <ProgressBar
                 android:id="@+id/load_progress"

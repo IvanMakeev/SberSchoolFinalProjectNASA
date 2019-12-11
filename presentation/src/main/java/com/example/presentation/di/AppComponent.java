@@ -1,6 +1,6 @@
 package com.example.presentation.di;
 
-import com.example.presentation.ui.MainFragment;
+import com.example.presentation.ui.fragment.MainFragment;
 
 import javax.inject.Singleton;
 

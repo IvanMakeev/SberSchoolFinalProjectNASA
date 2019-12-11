@@ -1,5 +1,7 @@
 package com.example.presentation.ui.viewmodel;
 
+import android.view.View;
+
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
@@ -38,6 +40,8 @@ public class MainViewModel extends ViewModel {
     private final int mCurrentPositionViewPage;
     @NotNull
     private final CompositeDisposable mCompositeDisposable;
+
+    private View.OnClickListener mClickListener;
 
     /**
      * @param interactor                 экземпляр интерактора
@@ -91,6 +95,17 @@ public class MainViewModel extends ViewModel {
      */
     public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
         return this::showInformation;
+    }
+
+    /**
+     * @return возвращает листенер для реагирования на нажатие imageView
+     */
+    public View.OnClickListener getClickListener(){
+        return mClickListener;
+    }
+
+    public void setClickListener(View.OnClickListener clickListener){
+        mClickListener = clickListener;
     }
 
     @Override

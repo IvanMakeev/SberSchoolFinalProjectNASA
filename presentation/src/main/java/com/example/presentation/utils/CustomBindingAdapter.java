@@ -1,6 +1,7 @@
 package com.example.presentation.utils;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
@@ -64,5 +65,18 @@ public class CustomBindingAdapter {
     ) {
         layout.setOnRefreshListener(listener);
         layout.post(() -> layout.setRefreshing(isLoading));
+    }
+
+    /**
+     * @param imageView     экземпляр ImageView
+     * @param clickListener слушатель для ImageView запускающий новый фрагмент с ImageView
+     */
+
+    @BindingAdapter({"bind:clickListener"})
+    public static void configureClickListener(
+            @NotNull ImageView imageView,
+            @NotNull View.OnClickListener clickListener
+    ) {
+        imageView.setOnClickListener(clickListener);
     }
 }

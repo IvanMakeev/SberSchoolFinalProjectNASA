@@ -27,7 +27,7 @@
             <ImageView
                 android:id="@+id/astronomy_picture"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:contentDescription="@string/picture"
                 android:paddingStart="@dimen/default_padding"

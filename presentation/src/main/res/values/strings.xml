@@ -6,4 +6,5 @@
     <string name="error">Something went wrong. Try again.</string>
     <string name="network_error">Network error. Check your internet connection.</string>
     <string name="astronomy_picture">Astronomy picture for %s</string>
+    <string name="image">Картинка</string>
 </resources>

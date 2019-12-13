@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -20,8 +21,6 @@ public class SplashActivity extends AppCompatActivity {
     private static final float MAX_OFFSET = 1f;
     private static final int MILLIS = 2000;
     private static final int REPEAT_COUNT = 1;
-    private static final String SCALE_X = "scaleX";
-    private static final String SCALE_Y = "scaleY";
     private ObjectAnimator scaleXAnimator;
     private ObjectAnimator scaleYAnimator;
 
@@ -32,8 +31,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         ImageView imageView = findViewById(R.id.nasa_logo);
-        scaleXAnimator = ObjectAnimator.ofFloat(imageView, SCALE_X, MIN_OFFSET, MAX_OFFSET);
-        scaleYAnimator = ObjectAnimator.ofFloat(imageView, SCALE_Y, MIN_OFFSET, MAX_OFFSET);
+        scaleXAnimator = ObjectAnimator.ofFloat(imageView, View.SCALE_X, MIN_OFFSET, MAX_OFFSET);
+        scaleYAnimator = ObjectAnimator.ofFloat(imageView, View.SCALE_Y, MIN_OFFSET, MAX_OFFSET);
 
         configure(scaleXAnimator).start();
         configure(scaleYAnimator).start();
@@ -53,9 +52,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /**
-     * Конфигурируем анимация
+     * Конфигурируется анимация
      *
-     * @return сконфигурированный аниматор
+     * @return сконфигурированный Animator
      */
     private Animator configure(ObjectAnimator animator) {
         animator.setDuration(MILLIS);

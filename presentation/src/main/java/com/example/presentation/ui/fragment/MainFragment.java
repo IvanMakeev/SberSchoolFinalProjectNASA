@@ -12,11 +12,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.domain.interactor.IAstronomyPictureInteractor;
 import com.example.presentation.AppDelegate;
+import com.example.presentation.R;
 import com.example.presentation.databinding.MainBinding;
 import com.example.presentation.ui.ZoomClickListener;
 import com.example.presentation.ui.viewmodel.MainViewModel;
 import com.example.presentation.ui.viewmodel.MainViewModelFactory;
 import com.example.presentation.utils.scheduler.IBaseSchedulerProvider;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import javax.inject.Inject;
 
@@ -53,6 +57,8 @@ public class MainFragment extends Fragment {
             ((ZoomClickListener) requireActivity()).onZoomImage(url);
         });
 
+        initYouTubePlayer(binding.getRoot());
+
         binding.setMainScreen(mViewModel);
         binding.setLifecycleOwner(this);
         return binding.getRoot();
@@ -62,5 +68,20 @@ public class MainFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mViewModel.showInformation();
+    }
+
+    private void initYouTubePlayer(View view) {
+        YouTubePlayerView youTubePlayerView = view.findViewById(R.id.youtube_player_view);
+        getLifecycle().addObserver(youTubePlayerView);
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                String videoId = mViewModel.getUrlPicture().get();
+                if (videoId != null) {
+                    youTubePlayer.loadVideo(videoId, 0f);
+                    youTubePlayer.pause();
+                }
+            }
+        });
     }
 }

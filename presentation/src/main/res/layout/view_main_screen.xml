@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -35,10 +36,24 @@
                 android:paddingTop="@dimen/default_padding"
                 android:paddingEnd="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
+                android:visibility="@{mainScreen.isPictureView ? View.VISIBLE : View.GONE}"
+                bind:clickListener="@{mainScreen.getClickListener()}"
                 bind:errorPlaceholder="@{@drawable/ic_image_black_96dp}"
                 bind:loadImage="@{mainScreen.urlPicture}"
-                bind:progress="@{mainScreen.isLoadingPicture}"
-                bind:clickListener="@{mainScreen.getClickListener()}"/>
+                bind:progress="@{mainScreen.isLoadingPicture}" />
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtube_player_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingTop="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:visibility="@{mainScreen.isPictureView ? View.GONE : View.VISIBLE}"
+                app:autoPlay="false"
+                app:showFullScreenButton="false" />
 
             <ProgressBar
                 android:id="@+id/load_progress"

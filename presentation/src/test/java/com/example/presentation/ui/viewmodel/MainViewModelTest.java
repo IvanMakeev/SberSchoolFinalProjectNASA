@@ -28,7 +28,8 @@ public class MainViewModelTest {
     @Rule
     public InstantTaskExecutorRule mInstantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private APODEntity mEnteredEntity;
+    private APODEntity mEnteredEntityPicture;
+    private APODEntity mEnteredEntityVideo;
     private final int mCurrentPositionPageAdapter = 0;
     private final String testDate = DateUtils.getDateOffset(mCurrentPositionPageAdapter);
 
@@ -40,11 +41,19 @@ public class MainViewModelTest {
     @Before
     public void setUp() {
 
-        mEnteredEntity = new APODEntity(
+        mEnteredEntityPicture = new APODEntity(
                 testDate,
                 "some explanation",
                 "title",
-                "https://apod.nasa.gov/apod/image/",
+                "https://apod.nasa.gov/apod/image/picture.png",
+                "copyright"
+        );
+
+        mEnteredEntityVideo = new APODEntity(
+                testDate,
+                "some explanation",
+                "title",
+                "https://www.youtube.com/embed/ofZTOxC9JQ4?rel=0",
                 "copyright"
         );
 
@@ -55,8 +64,8 @@ public class MainViewModelTest {
     }
 
     @Test
-    public void testShowInformation() {
-        when(mInteractor.getAstronomyPicture(any())).thenReturn(Single.fromCallable(() -> mEnteredEntity));
+    public void testShowInformationPicture() {
+        when(mInteractor.getAstronomyPicture(any())).thenReturn(Single.fromCallable(() -> mEnteredEntityPicture));
 
         mViewModel.showInformation();
 
@@ -66,10 +75,29 @@ public class MainViewModelTest {
         assertEquals(false, mViewModel.getIsLoadingData().getValue());
         assertFalse(mViewModel.getIsErrorVisible().get());
         assertEquals(false, mViewModel.getIsNetworkError().getValue());
-        assertEquals(mEnteredEntity.getTitle(), mViewModel.getTitle().get());
-        assertEquals(mEnteredEntity.getExplanation(), mViewModel.getExplanation().get());
-        assertEquals(mEnteredEntity.getUrl(), mViewModel.getUrlPicture().get());
-        assertEquals(mEnteredEntity.getCopyright(), mViewModel.getCopyright().get());
+        assertEquals(true, mViewModel.getIsPictureView().getValue());
+        assertEquals(mEnteredEntityPicture.getTitle(), mViewModel.getTitle().get());
+        assertEquals(mEnteredEntityPicture.getExplanation(), mViewModel.getExplanation().get());
+        assertEquals(mEnteredEntityPicture.getUrl(), mViewModel.getUrlPicture().get());
+        assertEquals(mEnteredEntityPicture.getCopyright(), mViewModel.getCopyright().get());
+    }
+
+    @Test
+    public void testShowInformationVideo() {
+        when(mInteractor.getAstronomyPicture(any())).thenReturn(Single.fromCallable(() -> mEnteredEntityVideo));
+
+        mViewModel.showInformation();
+
+        verify(mInteractor).getAstronomyPicture(testDate);
+        verifyZeroInteractions(mInteractor);
+        assertEquals(true, mViewModel.getIsLoadingPicture().getValue());
+        assertEquals(false, mViewModel.getIsLoadingData().getValue());
+        assertFalse(mViewModel.getIsErrorVisible().get());
+        assertEquals(false, mViewModel.getIsNetworkError().getValue());
+        assertEquals(false, mViewModel.getIsPictureView().getValue());
+        assertEquals(mEnteredEntityVideo.getTitle(), mViewModel.getTitle().get());
+        assertEquals(mEnteredEntityVideo.getExplanation(), mViewModel.getExplanation().get());
+        assertEquals(mEnteredEntityVideo.getCopyright(), mViewModel.getCopyright().get());
     }
 
     @Test

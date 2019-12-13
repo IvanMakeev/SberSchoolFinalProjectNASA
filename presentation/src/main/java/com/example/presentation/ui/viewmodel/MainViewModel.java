@@ -24,6 +24,9 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public class MainViewModel extends ViewModel {
 
+    private static final String JPG = ".jpg";
+    private static final String PNG = ".png";
+
     private final ObservableField<String> mTitle = new ObservableField<>();
     private final ObservableField<String> mExplanation = new ObservableField<>();
     private final ObservableField<String> mUrlPicture = new ObservableField<>();
@@ -32,6 +35,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isNetworkError = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> isLoadingPicture = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> isPictureView = new MutableLiveData<>(true);
 
     @NotNull
     private final IAstronomyPictureInteractor mInteractor;
@@ -82,10 +86,38 @@ public class MainViewModel extends ViewModel {
     }
 
     private void bindView(@NotNull APODEntity apodEntity) {
+        String url = apodEntity.getUrl();
+        if (isPictureUrl(url)) {
+            mUrlPicture.set(url);
+            isPictureView.postValue(true);
+        } else {
+            mUrlPicture.set(getYouTubeUrl(url));
+            isPictureView.postValue(false);
+        }
+
         mTitle.set(apodEntity.getTitle());
         mExplanation.set(apodEntity.getExplanation());
-        mUrlPicture.set(apodEntity.getUrl());
         mCopyright.set(apodEntity.getCopyright());
+    }
+
+    /**
+     * Проверка является ли url на картинку или видео
+     *
+     * @param url картинки
+     */
+    private boolean isPictureUrl(String url) {
+        return url.endsWith(JPG) || url.endsWith(PNG);
+    }
+
+    /**
+     * @param url картинки
+     * @return распарсенный url для youtube
+     */
+    private String getYouTubeUrl(String url) {
+        int endSizeUrl = 6;
+        String[] array = url.split("/");
+        String youTubeUrl = array[array.length - 1];
+        return youTubeUrl.subSequence(0, youTubeUrl.length() - endSizeUrl).toString();
     }
 
     /**
@@ -100,11 +132,11 @@ public class MainViewModel extends ViewModel {
     /**
      * @return возвращает листенер для реагирования на нажатие imageView
      */
-    public View.OnClickListener getClickListener(){
+    public View.OnClickListener getClickListener() {
         return mClickListener;
     }
 
-    public void setClickListener(View.OnClickListener clickListener){
+    public void setClickListener(View.OnClickListener clickListener) {
         mClickListener = clickListener;
     }
 
@@ -174,5 +206,12 @@ public class MainViewModel extends ViewModel {
      */
     public LiveData<Boolean> getIsLoadingData() {
         return isLoadingData;
+    }
+
+    /**
+     * Соятояние для определения картинки или ролика на экране
+     */
+    public MutableLiveData<Boolean> getIsPictureView() {
+        return isPictureView;
     }
 }

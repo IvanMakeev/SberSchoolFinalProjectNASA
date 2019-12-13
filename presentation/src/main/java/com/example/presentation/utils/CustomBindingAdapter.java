@@ -49,6 +49,10 @@ public class CustomBindingAdapter {
                             }
                         }
                     });
+        } else {
+            if (progress instanceof MutableLiveData) {
+                ((MutableLiveData) progress).setValue(false);
+            }
         }
     }
 

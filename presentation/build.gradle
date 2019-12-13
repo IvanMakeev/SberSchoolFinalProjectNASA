@@ -84,4 +84,6 @@ dependencies {
     //photo view
     implementation 'com.jsibbold:zoomage:1.3.0'
 
+    //youtube player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 }

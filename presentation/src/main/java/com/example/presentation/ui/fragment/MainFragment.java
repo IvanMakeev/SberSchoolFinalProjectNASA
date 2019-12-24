@@ -22,6 +22,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.util.concurrent.Executors;
+
 import javax.inject.Inject;
 
 public class MainFragment extends Fragment {
@@ -33,6 +35,7 @@ public class MainFragment extends Fragment {
     @Inject
     IBaseSchedulerProvider mSchedulerProvider;
     private MainViewModel mViewModel;
+    YouTubePlayerView mYouTubePlayerView;
 
     public static MainFragment newInstance(int position) {
         Bundle args = new Bundle();
@@ -70,16 +73,22 @@ public class MainFragment extends Fragment {
         mViewModel.showInformation();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mYouTubePlayerView.release();
+    }
+
     private void initYouTubePlayer(View view) {
-        YouTubePlayerView youTubePlayerView = view.findViewById(R.id.youtube_player_view);
-        getLifecycle().addObserver(youTubePlayerView);
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+        mYouTubePlayerView = view.findViewById(R.id.youtube_player_view);
+        getLifecycle().addObserver(mYouTubePlayerView);
+        mYouTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                 String videoId = mViewModel.getUrlPicture().get();
                 if (videoId != null) {
-                    youTubePlayer.loadVideo(videoId, 0f);
-                    youTubePlayer.pause();
+                    Executors.newSingleThreadExecutor().submit(() ->
+                            youTubePlayer.cueVideo(videoId, 0f));
                 }
             }
         });

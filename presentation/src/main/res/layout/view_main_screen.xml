@@ -31,13 +31,13 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:contentDescription="@string/picture"
+                android:onClick="@{mainScreen.getClickListener()}"
                 android:paddingStart="@dimen/default_padding"
                 android:paddingLeft="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
                 android:paddingEnd="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:visibility="@{mainScreen.isPictureView ? View.VISIBLE : View.GONE}"
-                bind:clickListener="@{mainScreen.getClickListener()}"
                 bind:errorPlaceholder="@{@drawable/ic_image_black_96dp}"
                 bind:loadImage="@{mainScreen.urlPicture}"
                 bind:progress="@{mainScreen.isLoadingPicture}" />
@@ -52,7 +52,6 @@
                 android:paddingEnd="@dimen/default_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:visibility="@{mainScreen.isPictureView ? View.GONE : View.VISIBLE}"
-                app:autoPlay="false"
                 app:showFullScreenButton="false" />
 
             <ProgressBar

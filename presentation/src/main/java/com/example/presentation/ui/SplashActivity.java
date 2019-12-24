@@ -2,7 +2,6 @@ package com.example.presentation.ui;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final float MIN_OFFSET = 0.5f;
     private static final float MAX_OFFSET = 1f;
     private static final int MILLIS = 2000;
-    private static final int REPEAT_COUNT = 1;
+    private static final int REPEAT_COUNT = 0;
     private ObjectAnimator scaleXAnimator;
     private ObjectAnimator scaleYAnimator;
 
@@ -58,7 +57,6 @@ public class SplashActivity extends AppCompatActivity {
      */
     private Animator configure(ObjectAnimator animator) {
         animator.setDuration(MILLIS);
-        animator.setRepeatMode(ValueAnimator.REVERSE);
         animator.setRepeatCount(REPEAT_COUNT);
         return animator;
 

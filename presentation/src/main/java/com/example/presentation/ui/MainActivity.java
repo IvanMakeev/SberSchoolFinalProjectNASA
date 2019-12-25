@@ -20,9 +20,6 @@ import com.example.presentation.utils.DateUtils;
 
 public class MainActivity extends AppCompatActivity implements ZoomClickListener {
 
-    private static final String JPG = ".jpg";
-    private static final String PNG = ".png";
-
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
@@ -38,14 +35,12 @@ public class MainActivity extends AppCompatActivity implements ZoomClickListener
 
     @Override
     public void onZoomImage(String url) {
-        if (url.endsWith(JPG) || url.endsWith(PNG)) {
-            ImageFragment imageFragment = ImageFragment.newInstance(url);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.root_view, imageFragment)
-                    .commit();
-        }
+        ImageFragment imageFragment = ImageFragment.newInstance(url);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.root_view, imageFragment)
+                .commit();
     }
 
     private static class PageAdapter extends FragmentStatePagerAdapter {

@@ -29,6 +29,8 @@ import javax.inject.Inject;
 public class MainFragment extends Fragment {
 
     private static final String POSITION = "position";
+    private static final String JPG = ".jpg";
+    private static final String PNG = ".png";
 
     @Inject
     IAstronomyPictureInteractor mInteractor;
@@ -57,7 +59,9 @@ public class MainFragment extends Fragment {
 
         mViewModel.setClickListener(v -> {
             String url = mViewModel.getUrlPicture().get();
-            ((ZoomClickListener) requireActivity()).onZoomImage(url);
+            if (url != null && (url.endsWith(JPG) || url.endsWith(PNG))) {
+                ((ZoomClickListener) requireActivity()).onZoomImage(url);
+            }
         });
 
         initYouTubePlayer(binding.getRoot());

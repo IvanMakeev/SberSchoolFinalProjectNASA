@@ -1,30 +1,24 @@
-package com.example.domain.repository;
+package com.example.domain.repository
 
-import com.example.domain.model.APODEntity;
-
-import org.jetbrains.annotations.NotNull;
-
-import io.reactivex.Single;
+import com.example.domain.model.APODEntity
+import io.reactivex.Single
 
 /**
  * Репозиторий для получения и сохранения данных
  */
-
-public interface IAstronomyPictureRepository {
-
+interface IAstronomyPictureRepository {
     /**
      * Получение данных
      *
      * @param date дата для которой необходимо получить данные
      * @return возвращает Single с данными для отображения пользователю
      */
-    @NotNull
-    Single<APODEntity> getAstronomyPicture(@NotNull String date);
+    fun getAstronomyPicture(date: String): Single<APODEntity>
 
     /**
      * Сохранение данных
      *
      * @param apod pojo объект для сохранения данных
      */
-    void insertAstronomyPicture(@NotNull APODEntity apod);
+    fun insertAstronomyPicture(apod: APODEntity)
 }

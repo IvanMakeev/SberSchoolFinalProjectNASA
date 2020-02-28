@@ -32,6 +32,6 @@ public class DateUtilsTest {
 
     @Test
     public void testGetLengthOfYear() {
-        assertEquals(DAYS_OF_YEAR, DateUtils.getLengthOfYear());
+        assertEquals(DAYS_OF_YEAR, DateUtils.lengthOfYear());
     }
 }

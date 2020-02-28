@@ -24,7 +24,7 @@ open class RoomMapper @Inject constructor() : IMapper<APODEntity, APODRoom> {
                     type.explanation,
                     type.title,
                     type.url,
-                    type.copyright!!)
+                    type.copyright ?: "")
         } else {
             APODEntity(
                     "",

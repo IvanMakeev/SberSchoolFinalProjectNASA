@@ -71,11 +71,11 @@ public class MainViewModelTest {
 
         verify(mInteractor).getAstronomyPicture(testDate);
         verifyZeroInteractions(mInteractor);
-        assertEquals(true, mViewModel.getIsLoadingPicture().getValue());
-        assertEquals(false, mViewModel.getIsLoadingData().getValue());
-        assertFalse(mViewModel.getIsErrorVisible().get());
-        assertEquals(false, mViewModel.getIsNetworkError().getValue());
-        assertEquals(true, mViewModel.getIsPictureView().getValue());
+        assertEquals(true, mViewModel.isLoadingPicture().getValue());
+        assertEquals(false, mViewModel.isLoadingData().getValue());
+        assertFalse(mViewModel.isErrorVisible().get());
+        assertEquals(false, mViewModel.isNetworkError().getValue());
+        assertEquals(true, mViewModel.isPictureView().getValue());
         assertEquals(mEnteredEntityPicture.getTitle(), mViewModel.getTitle().get());
         assertEquals(mEnteredEntityPicture.getExplanation(), mViewModel.getExplanation().get());
         assertEquals(mEnteredEntityPicture.getUrl(), mViewModel.getUrlPicture().get());
@@ -90,11 +90,11 @@ public class MainViewModelTest {
 
         verify(mInteractor).getAstronomyPicture(testDate);
         verifyZeroInteractions(mInteractor);
-        assertEquals(true, mViewModel.getIsLoadingPicture().getValue());
-        assertEquals(false, mViewModel.getIsLoadingData().getValue());
-        assertFalse(mViewModel.getIsErrorVisible().get());
-        assertEquals(false, mViewModel.getIsNetworkError().getValue());
-        assertEquals(false, mViewModel.getIsPictureView().getValue());
+        assertEquals(true, mViewModel.isLoadingPicture().getValue());
+        assertEquals(false, mViewModel.isLoadingData().getValue());
+        assertFalse(mViewModel.isErrorVisible().get());
+        assertEquals(false, mViewModel.isNetworkError().getValue());
+        assertEquals(false, mViewModel.isPictureView().getValue());
         assertEquals(mEnteredEntityVideo.getTitle(), mViewModel.getTitle().get());
         assertEquals(mEnteredEntityVideo.getExplanation(), mViewModel.getExplanation().get());
         assertEquals(mEnteredEntityVideo.getCopyright(), mViewModel.getCopyright().get());
@@ -108,10 +108,10 @@ public class MainViewModelTest {
 
         verify(mInteractor).getAstronomyPicture(testDate);
         verifyZeroInteractions(mInteractor);
-        assertEquals(true, mViewModel.getIsLoadingPicture().getValue());
-        assertEquals(false, mViewModel.getIsLoadingData().getValue());
-        assertTrue(mViewModel.getIsErrorVisible().get());
-        assertEquals(true, mViewModel.getIsNetworkError().getValue());
+        assertEquals(true, mViewModel.isLoadingPicture().getValue());
+        assertEquals(false, mViewModel.isLoadingData().getValue());
+        assertTrue(mViewModel.isErrorVisible().get());
+        assertEquals(true, mViewModel.isNetworkError().getValue());
         assertNull(mViewModel.getTitle().get());
         assertNull(mViewModel.getExplanation().get());
         assertNull(mViewModel.getUrlPicture().get());
@@ -127,10 +127,10 @@ public class MainViewModelTest {
 
         verify(mInteractor).getAstronomyPicture(testDate);
         verifyZeroInteractions(mInteractor);
-        assertEquals(true, mViewModel.getIsLoadingPicture().getValue());
-        assertEquals(false, mViewModel.getIsLoadingData().getValue());
-        assertTrue(mViewModel.getIsErrorVisible().get());
-        assertEquals(false, mViewModel.getIsNetworkError().getValue());
+        assertEquals(true, mViewModel.isLoadingPicture().getValue());
+        assertEquals(false, mViewModel.isLoadingData().getValue());
+        assertTrue(mViewModel.isErrorVisible().get());
+        assertEquals(false, mViewModel.isNetworkError().getValue());
         assertNull(mViewModel.getTitle().get());
         assertNull(mViewModel.getExplanation().get());
         assertNull(mViewModel.getUrlPicture().get());

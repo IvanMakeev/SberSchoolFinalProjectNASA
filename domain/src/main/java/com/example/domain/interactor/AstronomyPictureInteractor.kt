@@ -34,6 +34,7 @@ class AstronomyPictureInteractor(private val mRepository: IAstronomyPictureRepos
     override fun getAstronomyPicture(date: String): Single<APODEntity> {
         return mRepository.getAstronomyPicture(date)
                 .onErrorResumeNext { throwable: Throwable ->
+                    throwable.printStackTrace()
                     val isError = networkErrorList.contains(throwable::class.java)
                     val exception = if (isError) NetworkAccessException(throwable) else CommonException(throwable)
                     Single.error(exception)

@@ -11,8 +11,4 @@ data class APODJson(
         @field:SerializedName("explanation") val explanation: String,
         @field:SerializedName("title") val title: String,
         @field:SerializedName("url") val url: String,
-        @field:SerializedName("copyright") var copyright: String?) {
-    init {
-        this.copyright = copyright ?: ""
-    }
-}
+        @field:SerializedName("copyright") var copyright: String?)

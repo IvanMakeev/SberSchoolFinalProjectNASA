@@ -14,8 +14,4 @@ data class APODRoom(
         @field:ColumnInfo(name = "explanation") val explanation: String,
         @field:ColumnInfo(name = "title") val title: String,
         @field:ColumnInfo(name = "url") val url: String,
-        @field:ColumnInfo(name = "copyright") var copyright: String?) {
-    init {
-        this.copyright = copyright ?: ""
-    }
-}
+        @field:ColumnInfo(name = "copyright") var copyright: String?)

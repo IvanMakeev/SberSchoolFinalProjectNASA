@@ -24,7 +24,7 @@ open class JsonMapper @Inject constructor() : IMapper<APODEntity, APODJson> {
                     type.explanation,
                     type.title,
                     type.url,
-                    type.copyright!!)
+                    type.copyright ?: "")
         } else {
             APODEntity(
                     "",

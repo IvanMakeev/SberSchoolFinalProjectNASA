@@ -26,12 +26,7 @@ open class JsonMapper @Inject constructor() : IMapper<APODEntity, APODJson> {
                     type.url,
                     type.copyright ?: "")
         } else {
-            APODEntity(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "")
+            APODEntity()
         }
     }
 }

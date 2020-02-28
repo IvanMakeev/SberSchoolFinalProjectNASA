@@ -26,12 +26,7 @@ open class RoomMapper @Inject constructor() : IMapper<APODEntity, APODRoom> {
                     type.url,
                     type.copyright ?: "")
         } else {
-            APODEntity(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "")
+            APODEntity()
         }
     }
 }

@@ -2,41 +2,41 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "971513db8371b9250519a8403a160cf0",
+    "identityHash": "a4622c2aae506c10b8bb48587b7982aa",
     "entities": [
       {
         "tableName": "APODRoom",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `explanation` TEXT NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `copyright` TEXT NOT NULL, PRIMARY KEY(`date`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `explanation` TEXT NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `copyright` TEXT, PRIMARY KEY(`date`))",
         "fields": [
           {
-            "fieldPath": "mDate",
+            "fieldPath": "date",
             "columnName": "date",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "mExplanation",
+            "fieldPath": "explanation",
             "columnName": "explanation",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "mTitle",
+            "fieldPath": "title",
             "columnName": "title",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "mUrl",
+            "fieldPath": "url",
             "columnName": "url",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "mCopyright",
+            "fieldPath": "copyright",
             "columnName": "copyright",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -51,7 +51,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"971513db8371b9250519a8403a160cf0\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a4622c2aae506c10b8bb48587b7982aa\")"
     ]
   }
 }

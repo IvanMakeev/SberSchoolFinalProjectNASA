@@ -7,9 +7,9 @@ import com.example.data.model.APODJson
 import com.example.data.model.APODRoom
 import com.example.domain.model.APODEntity
 import com.example.domain.repository.IAstronomyPictureRepository
-import io.reactivex.Single
-import io.reactivex.SingleSource
-import io.reactivex.functions.Function
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 
 /**
  * Реализация репозитория для получения и сохранения данных
@@ -22,10 +22,10 @@ class AstronomyPictureRepository
  * @constructor roomMapper используется для маппинга данных из room в entity и наоборот
  */
 (
-        private val mApi: NasaApi,
-        private val mDao: NasaDao,
-        private val mJsonMapper: IMapper<APODEntity, APODJson>,
-        private val mRoomMapper: IMapper<APODEntity, APODRoom>
+        private val api: NasaApi,
+        private val dao: NasaDao,
+        private val jsonMapper: IMapper<APODEntity, APODJson>,
+        private val roomMapper: IMapper<APODEntity, APODRoom>
 ) : IAstronomyPictureRepository {
     /**
      * Получение данных
@@ -33,33 +33,23 @@ class AstronomyPictureRepository
      * @param date дата для которой необходимо получить данные
      * @return возвращает Single с данными для отображения пользователю
      */
-    override fun getAstronomyPicture(date: String): Single<APODEntity> {
-        return Single.fromCallable { mRoomMapper.mapToEntity(mDao.getAstronomyPicture(date)) }
-                .flatMap(getSource(date))
-    }
+    override suspend fun getAstronomyPicture(date: String): APODEntity {
 
-    private fun getSource(date: String): Function<APODEntity, SingleSource<APODEntity>> {
-        return Function { apodEntity: APODEntity ->
-            if (isDataExist(apodEntity)) {
-                return@Function fetchFromDatabase(apodEntity)
-            } else {
-                return@Function fetchFromNetwork(date)
-            }
-        }
+        val entity = fetchFromDatabase(date = date)
+        return if (isDataExist(entity)) return entity else fetchFromNetwork(date)
     }
 
     private fun isDataExist(apodEntity: APODEntity): Boolean {
         return apodEntity.date != ""
     }
 
-    private fun fetchFromDatabase(apodEntity: APODEntity): SingleSource<APODEntity> {
-        return Single.fromCallable { apodEntity }
-    }
+    private suspend fun fetchFromDatabase(date: String): APODEntity = roomMapper.mapToEntity(dao.getAstronomyPicture(date))
 
-    private fun fetchFromNetwork(date: String): SingleSource<APODEntity> {
-        return mApi.getAstronomyPicture(date)
-                .map { type: APODJson? -> mJsonMapper.mapToEntity(type) }
-                .doOnSuccess { apod: APODEntity -> mDao.insertAstronomyPicture(mRoomMapper.mapFromEntity(apod)) }
+    private suspend fun fetchFromNetwork(date: String): APODEntity {
+        val entity = jsonMapper.mapToEntity(api.getAstronomyPicture(date))
+        insertAstronomyPicture(entity)
+        return entity
+
     }
 
     /**
@@ -67,8 +57,5 @@ class AstronomyPictureRepository
      *
      * @param apod pojo объект для сохранения данных
      */
-    override fun insertAstronomyPicture(apod: APODEntity) {
-        mDao.insertAstronomyPicture(mRoomMapper.mapFromEntity(apod))
-    }
-
+    override suspend fun insertAstronomyPicture(apod: APODEntity) = dao.insertAstronomyPicture(roomMapper.mapFromEntity(apod))
 }

@@ -12,8 +12,6 @@ import com.example.domain.interactor.AstronomyPictureInteractor
 import com.example.domain.interactor.IAstronomyPictureInteractor
 import com.example.domain.model.APODEntity
 import com.example.domain.repository.IAstronomyPictureRepository
-import com.example.presentation.utils.scheduler.IBaseSchedulerProvider
-import com.example.presentation.utils.scheduler.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -52,9 +50,4 @@ internal class InteractorModule {
     @Singleton
     fun provideAstronomyPictureInteractor(repository: IAstronomyPictureRepository): IAstronomyPictureInteractor =
             AstronomyPictureInteractor(repository)
-
-    @Provides
-    @Singleton
-    fun provideSchedulerProvider(provider: SchedulerProvider): IBaseSchedulerProvider =
-            provider
 }

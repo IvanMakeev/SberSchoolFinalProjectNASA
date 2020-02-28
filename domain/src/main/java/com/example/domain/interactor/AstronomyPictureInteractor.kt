@@ -4,7 +4,6 @@ import com.example.domain.exception.CommonException
 import com.example.domain.exception.NetworkAccessException
 import com.example.domain.model.APODEntity
 import com.example.domain.repository.IAstronomyPictureRepository
-import io.reactivex.Single
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -12,7 +11,7 @@ import java.net.UnknownHostException
 /**
  * Реализация интерактора, отвечающего за операции связанные с получением и сохранением данных
  */
-class AstronomyPictureInteractor(private val mRepository: IAstronomyPictureRepository) : IAstronomyPictureInteractor {
+class AstronomyPictureInteractor(private val repository: IAstronomyPictureRepository) : IAstronomyPictureInteractor {
 
     companion object {
         /**
@@ -31,14 +30,16 @@ class AstronomyPictureInteractor(private val mRepository: IAstronomyPictureRepos
      * @param date дата для которой необходимо получить данные
      * @return возвращает Single с данными для отображения пользователю
      */
-    override fun getAstronomyPicture(date: String): Single<APODEntity> {
-        return mRepository.getAstronomyPicture(date)
-                .onErrorResumeNext { throwable: Throwable ->
-                    throwable.printStackTrace()
-                    val isError = networkErrorList.contains(throwable::class.java)
-                    val exception = if (isError) NetworkAccessException(throwable) else CommonException(throwable)
-                    Single.error(exception)
-                }
+    override suspend fun getAstronomyPicture(date: String): APODEntity {
+        println("AstronomyPictureInteractor.getAstronomyPicture - ${Thread.currentThread().name}")
+
+        try {
+            return repository.getAstronomyPicture(date)
+        } catch (throwable: Throwable) {
+            val isError = networkErrorList.contains(throwable::class.java)
+            val exception = if (isError) NetworkAccessException(throwable) else CommonException(throwable)
+            throw exception
+        }
     }
 
     /**
@@ -46,7 +47,9 @@ class AstronomyPictureInteractor(private val mRepository: IAstronomyPictureRepos
      *
      * @param apod pojo объект для сохранения данных
      */
-    override fun insertAstronomyPicture(apod: APODEntity) {
-        mRepository.insertAstronomyPicture(apod)
+    override suspend fun insertAstronomyPicture(apod: APODEntity) {
+        println("AstronomyPictureInteractor.insertAstronomyPicture - ${Thread.currentThread().name}")
+
+        repository.insertAstronomyPicture(apod)
     }
 }

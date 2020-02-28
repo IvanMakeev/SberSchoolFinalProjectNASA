@@ -6,14 +6,13 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.domain.exception.NetworkAccessException
 import com.example.domain.interactor.IAstronomyPictureInteractor
 import com.example.domain.model.APODEntity
 import com.example.presentation.utils.DateUtils.getDateOffset
-import com.example.presentation.utils.scheduler.IBaseSchedulerProvider
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel предоставления астронамической картинки
@@ -24,9 +23,8 @@ class MainViewModel(
          * @constructor schedulerProvider          обертка над планировщиками RxJava
          * @constructor currentPositionPageAdapter текущая позиция PageAdapter'a на экране
          */
-        private val mInteractor: IAstronomyPictureInteractor,
-        private val mSchedulerProvider: IBaseSchedulerProvider,
-        private val mCurrentPositionViewPage: Int
+        private val interactor: IAstronomyPictureInteractor,
+        private val currentPositionViewPage: Int
 ) : ViewModel() {
 
     companion object {
@@ -38,7 +36,6 @@ class MainViewModel(
     private val _isLoadingPicture = MutableLiveData(false)
     private val _isLoadingData = MutableLiveData(false)
     private val _isPictureView = MutableLiveData(true)
-    private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     /**
      * Состояние видимости сетевой ошибки
@@ -94,24 +91,22 @@ class MainViewModel(
      * Загрузка и отображение данных на экране
      */
     fun showInformation() {
-        mCompositeDisposable.add(
-                mInteractor.getAstronomyPicture(getDateOffset(mCurrentPositionViewPage))
-                        .subscribeOn(mSchedulerProvider.io())
-                        .observeOn(mSchedulerProvider.mainThread())
-                        .doOnSubscribe {
-                            _isLoadingData.value = true
-                            _isLoadingPicture.value = true
-                            isErrorVisible.set(false)
-                        }
-                        .doFinally { _isLoadingData.setValue(false) }
-                        .subscribe({ apodEntity: APODEntity -> bindView(apodEntity) }
-                        ) { throwable: Throwable? ->
-                            if (throwable is NetworkAccessException) {
-                                _isNetworkError.value = true
-                            }
-                            isErrorVisible.set(true)
-                        }
-        )
+        viewModelScope.launch {
+            _isLoadingData.value = true
+            _isLoadingPicture.value = true
+            isErrorVisible.set(false)
+            try {
+                val entity = interactor.getAstronomyPicture(getDateOffset(currentPositionViewPage))
+                bindView(entity)
+            } catch (exception: Exception) {
+                if (exception is NetworkAccessException) {
+                    _isNetworkError.value = true
+                }
+                isErrorVisible.set(true)
+            } finally {
+                _isLoadingData.value = false
+            }
+        }
     }
 
     private fun bindView(apodEntity: APODEntity) {
@@ -153,8 +148,4 @@ class MainViewModel(
      * @return возвращает OnRefreshListener
      */
     fun getOnRefreshListener() = OnRefreshListener { showInformation() }
-
-    override fun onCleared() {
-        mCompositeDisposable.dispose()
-    }
 }

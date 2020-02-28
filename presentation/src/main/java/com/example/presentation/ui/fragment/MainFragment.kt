@@ -13,7 +13,6 @@ import com.example.presentation.databinding.MainBinding
 import com.example.presentation.ui.ZoomClickListener
 import com.example.presentation.ui.viewmodel.MainViewModel
 import com.example.presentation.ui.viewmodel.MainViewModelFactory
-import com.example.presentation.utils.scheduler.IBaseSchedulerProvider
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -38,8 +37,6 @@ class MainFragment : Fragment() {
 
     @Inject
     lateinit var mInteractor: IAstronomyPictureInteractor
-    @Inject
-    lateinit var mSchedulerProvider: IBaseSchedulerProvider
     private lateinit var mViewModel: MainViewModel
     private lateinit var mYouTubePlayerView: YouTubePlayerView
 
@@ -48,7 +45,7 @@ class MainFragment : Fragment() {
         val binding = MainBinding.inflate(inflater, container, false)
         injector.getAppComponent().inject(this)
         val currentPositionPageAdapter = arguments?.getInt(POSITION) ?: 0
-        val factory = MainViewModelFactory(mInteractor, mSchedulerProvider, currentPositionPageAdapter)
+        val factory = MainViewModelFactory(mInteractor, currentPositionPageAdapter)
         mViewModel = ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
         mViewModel.clickListener = View.OnClickListener {
             val url = mViewModel.urlPicture.get()

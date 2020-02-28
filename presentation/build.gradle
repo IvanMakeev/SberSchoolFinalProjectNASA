@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.example.nasa"
         minSdkVersion 21
@@ -40,12 +40,16 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    def lifecycle_version = "2.1.0"
+    def room_version = "2.2.2"
+    def retrofit2_version = "2.6.2"
+    def okhttp3_version = "4.2.1"
+    def dagger2_version = "2.15"
 
     //data binding
     annotationProcessor "androidx.databinding:databinding-compiler:$android_plugin_version"
 
     // ViewModel and LiveData
-    def lifecycle_version = "2.1.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
 
@@ -58,7 +62,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //room
-    def room_version = "2.2.2"
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
 
@@ -66,17 +69,14 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     //retrofit
-    def retrofit2_version = "2.6.2"
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2_version"
 
     //okhttp3
-    def okhttp3_version = "4.2.1"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
 
     // dagger 2
-    def dagger2_version = "2.15"
     implementation "com.google.dagger:dagger:$dagger2_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
     implementation "com.google.dagger:dagger-android-support:$dagger2_version"

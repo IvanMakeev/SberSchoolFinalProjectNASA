@@ -1,7 +1,6 @@
 package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 /**
  * Pojo class для работы с Json

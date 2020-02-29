@@ -7,9 +7,6 @@ import com.example.data.model.APODJson
 import com.example.data.model.APODRoom
 import com.example.domain.model.APODEntity
 import com.example.domain.repository.IAstronomyPictureRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 
 /**
  * Реализация репозитория для получения и сохранения данных
@@ -34,23 +31,23 @@ class AstronomyPictureRepository
      * @return возвращает Single с данными для отображения пользователю
      */
     override suspend fun getAstronomyPicture(date: String): APODEntity {
-
-        val entity = fetchFromDatabase(date = date)
-        return if (isDataExist(entity)) return entity else fetchFromNetwork(date)
+        return when (val entityRoom = fetchFromDatabase(date = date)) {
+            null -> {
+                val entity = jsonMapper.mapToEntity(fetchFromNetwork(date))
+                insertAstronomyPicture(entity)
+                entity
+            }
+            else -> {
+                roomMapper.mapToEntity(entityRoom)
+            }
+        }
     }
 
-    private fun isDataExist(apodEntity: APODEntity): Boolean {
-        return apodEntity.date != ""
-    }
+    private suspend fun fetchFromDatabase(date: String): APODRoom? = dao.getAstronomyPicture(date)
 
-    private suspend fun fetchFromDatabase(date: String): APODEntity = roomMapper.mapToEntity(dao.getAstronomyPicture(date))
 
-    private suspend fun fetchFromNetwork(date: String): APODEntity {
-        val entity = jsonMapper.mapToEntity(api.getAstronomyPicture(date))
-        insertAstronomyPicture(entity)
-        return entity
+    private suspend fun fetchFromNetwork(date: String): APODJson = api.getAstronomyPicture(date)
 
-    }
 
     /**
      * Сохранение данных

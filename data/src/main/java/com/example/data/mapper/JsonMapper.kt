@@ -17,16 +17,13 @@ open class JsonMapper @Inject constructor() : IMapper<APODEntity, APODJson> {
                 type.copyright)
     }
 
-    override fun mapToEntity(type: APODJson?): APODEntity {
-        return if (type != null) {
-            APODEntity(
-                    type.date,
-                    type.explanation,
-                    type.title,
-                    type.url,
-                    type.copyright ?: "")
-        } else {
-            APODEntity()
-        }
+    override fun mapToEntity(type: APODJson): APODEntity {
+        return APODEntity(
+                type.date,
+                type.explanation,
+                type.title,
+                type.url,
+                type.copyright ?: "")
+
     }
 }

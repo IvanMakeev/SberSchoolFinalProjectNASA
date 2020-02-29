@@ -31,8 +31,6 @@ class AstronomyPictureInteractor(private val repository: IAstronomyPictureReposi
      * @return возвращает Single с данными для отображения пользователю
      */
     override suspend fun getAstronomyPicture(date: String): APODEntity {
-        println("AstronomyPictureInteractor.getAstronomyPicture - ${Thread.currentThread().name}")
-
         try {
             return repository.getAstronomyPicture(date)
         } catch (throwable: Throwable) {
@@ -48,8 +46,6 @@ class AstronomyPictureInteractor(private val repository: IAstronomyPictureReposi
      * @param apod pojo объект для сохранения данных
      */
     override suspend fun insertAstronomyPicture(apod: APODEntity) {
-        println("AstronomyPictureInteractor.insertAstronomyPicture - ${Thread.currentThread().name}")
-
         repository.insertAstronomyPicture(apod)
     }
 }

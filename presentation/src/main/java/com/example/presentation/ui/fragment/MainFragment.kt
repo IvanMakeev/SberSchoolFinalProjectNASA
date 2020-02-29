@@ -36,45 +36,45 @@ class MainFragment : Fragment() {
     }
 
     @Inject
-    lateinit var mInteractor: IAstronomyPictureInteractor
-    private lateinit var mViewModel: MainViewModel
-    private lateinit var mYouTubePlayerView: YouTubePlayerView
+    lateinit var interactor: IAstronomyPictureInteractor
+    private lateinit var viewModel: MainViewModel
+    private lateinit var youTubePlayerView: YouTubePlayerView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = MainBinding.inflate(inflater, container, false)
         injector.getAppComponent().inject(this)
         val currentPositionPageAdapter = arguments?.getInt(POSITION) ?: 0
-        val factory = MainViewModelFactory(mInteractor, currentPositionPageAdapter)
-        mViewModel = ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
-        mViewModel.clickListener = View.OnClickListener {
-            val url = mViewModel.urlPicture.get()
+        val factory = MainViewModelFactory(interactor, currentPositionPageAdapter)
+        viewModel = ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
+        viewModel.clickListener = View.OnClickListener {
+            val url = viewModel.urlPicture.get()
             if (url != null && (url.endsWith(JPG) || url.endsWith(PNG))) {
                 (requireActivity() as ZoomClickListener).onZoomImage(url)
             }
         }
         initYouTubePlayer(binding.root)
-        binding.mainScreen = mViewModel
+        binding.mainScreen = viewModel
         binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        mViewModel.showInformation()
+        viewModel.showInformation()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mYouTubePlayerView.release()
+        youTubePlayerView.release()
     }
 
     private fun initYouTubePlayer(view: View) {
-        mYouTubePlayerView = view.findViewById(R.id.youtube_player_view)
-        lifecycle.addObserver(mYouTubePlayerView)
-        mYouTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+        youTubePlayerView = view.findViewById(R.id.youtube_player_view)
+        lifecycle.addObserver(youTubePlayerView)
+        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoId = mViewModel.urlPicture.get()
+                val videoId = viewModel.urlPicture.get()
                 videoId?.let {
                     Executors.newSingleThreadExecutor().submit { youTubePlayer.cueVideo(videoId, 0f) }
                 }

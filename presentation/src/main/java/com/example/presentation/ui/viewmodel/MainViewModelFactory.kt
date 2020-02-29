@@ -12,11 +12,11 @@ class MainViewModelFactory
  * @constructor currentPositionPageAdapter текущая позиция PageAdapter'a на экране
  */
 (
-        private val mInteractor: IAstronomyPictureInteractor,
-        private val mCurrentPositionPageAdapter: Int
+        private val interactor: IAstronomyPictureInteractor,
+        private val currentPositionPageAdapter: Int
 ) : NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
-            MainViewModel(mInteractor, mCurrentPositionPageAdapter) as T
+            MainViewModel(interactor, currentPositionPageAdapter) as T
 
 }

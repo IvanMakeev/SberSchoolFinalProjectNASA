@@ -17,16 +17,13 @@ open class RoomMapper @Inject constructor() : IMapper<APODEntity, APODRoom> {
                 type.copyright)
     }
 
-    override fun mapToEntity(type: APODRoom?): APODEntity {
-        return if (type != null) {
-            APODEntity(
-                    type.date,
-                    type.explanation,
-                    type.title,
-                    type.url,
-                    type.copyright ?: "")
-        } else {
-            APODEntity()
-        }
+    override fun mapToEntity(type: APODRoom): APODEntity {
+        return APODEntity(
+                type.date,
+                type.explanation,
+                type.title,
+                type.url,
+                type.copyright ?: "")
+
     }
 }

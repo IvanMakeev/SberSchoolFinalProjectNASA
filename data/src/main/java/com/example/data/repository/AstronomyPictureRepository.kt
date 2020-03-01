@@ -7,6 +7,8 @@ import com.example.data.model.APODJson
 import com.example.data.model.APODRoom
 import com.example.domain.model.APODEntity
 import com.example.domain.repository.IAstronomyPictureRepository
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * Реализация репозитория для получения и сохранения данных
@@ -54,5 +56,11 @@ class AstronomyPictureRepository
      *
      * @param apod pojo объект для сохранения данных
      */
-    override suspend fun insertAstronomyPicture(apod: APODEntity) = dao.insertAstronomyPicture(roomMapper.mapFromEntity(apod))
+    override suspend fun insertAstronomyPicture(apod: APODEntity) {
+        coroutineScope {
+            launch {
+                dao.insertAstronomyPicture(roomMapper.mapFromEntity(apod))
+            }
+        }
+    }
 }
